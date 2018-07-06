@@ -19,7 +19,8 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static SerialComManager scm;
     private static long handle;
-    private static DecimalFormat powerFormat = new DecimalFormat("#,##0.0");
+    
+    private static boolean isNetworkEnabled = false;
 
     /**
      * Creates new form PowerDisplay
@@ -50,6 +51,11 @@ public class PowerDisplay extends javax.swing.JFrame {
         }
     }
     
+    private static void setNetworkEnabled(boolean value) {
+        isNetworkEnabled = value;
+    }
+        
+    
     private static void updateStatusField(String value) {
         jtf_StatusField.setText(value);
     }
@@ -57,32 +63,33 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static void parseStringFromLP100A(String data) {
         String[] dataArray = data.substring(1).split(",");
         try {
-            updateForwardPower(dataArray[0]);
-            updateTransmittingRadio(dataArray[5], dataArray[0]);
-            updateSWR(dataArray[8]);
-            updateDbmValue(dataArray[7]);
+            PowerDataDto powerDto = new PowerDataDto(dataArray);
+            updateUserInterface(powerDto);
+            
+            
         } catch (Exception ex) {
             updateStatusField("parse error from lp100");
         }
     }
-
-    private static void updateDbmValue(String value) {
-        double dbmValue = Double.parseDouble(value);
-        jl_DbmValue.setText(powerFormat.format(dbmValue));
+    
+    private static void updateUserInterface(PowerDataDto dto) {
+        updateForwardPower(dto);
+        updateTransmittingRadio(dto);
+        updateSWR(dto);
+        jl_DbmValue.setText(dto.get_dBm().toString());
     }
 
-    private static void updateTransmittingRadio(String radioValue, String forwardPower) {
-        double txRadio = Double.parseDouble(radioValue);
-        double txRadioFwdPower = Double.parseDouble(forwardPower);
-        if (txRadio == 2 && txRadioFwdPower > 0) {
+
+    private static void updateTransmittingRadio(PowerDataDto dto) {      
+        if (dto.getTransmittingRadio() == 2 && dto.getForwardPower() > 0) {
             jl_Tx2Active.setForeground(Color.WHITE);
             jl_Tx2Active.setBackground(Color.RED);
-        } else if (txRadio == 0 && txRadioFwdPower > 0) {
+        } else if (dto.getTransmittingRadio() == 0 && dto.getForwardPower() > 0) {
             jl_Tx1Active.setForeground(Color.WHITE);
             jl_Tx1Active.setBackground(Color.RED);
         }
 
-        if (txRadio == 2 && txRadioFwdPower == 0) {
+        if (dto.getTransmittingRadio() == 2 && dto.getForwardPower() == 0) {
             jl_Tx1Active.setForeground(Color.LIGHT_GRAY);
             jl_Tx2Active.setForeground(Color.LIGHT_GRAY);
             jl_Tx1Active.setBackground(Color.BLACK);
@@ -90,39 +97,34 @@ public class PowerDisplay extends javax.swing.JFrame {
         }
     }
 
-    private static void updateForwardPower(String value) {
-        double power = Double.parseDouble(value);
-
-        if (power >= 0 && power <= 600) {
-            jl_power_manual.setText(powerFormat.format(power));
-        } else if (power > 600 && power <= 1000) {
+    private static void updateForwardPower(PowerDataDto dto) {
+        if (dto.getForwardPower() >= 0 && dto.getForwardPower() <= 600) {
+            jl_power_manual.setText(dto.getFormattedForwardPower());
+        } else if (dto.getForwardPower() > 600 && dto.getForwardPower() <= 900) {
             jl_power_manual.setForeground(Color.ORANGE);
-            jl_power_manual.setText(powerFormat.format(power));
-        } else if (power > 1000) {
+            jl_power_manual.setText(dto.getFormattedForwardPower());
+        } else if (dto.getForwardPower() > 901) {
             jl_power_manual.setForeground(Color.RED);
-            jl_power_manual.setText(powerFormat.format(power));
+            jl_power_manual.setText(dto.getFormattedForwardPower());
         }
-        if (power == 0) {
+        if (dto.getForwardPower() == 0) {
             jl_power_manual.setForeground(Color.WHITE);
-            jl_power_manual.setText(powerFormat.format(power));
+            jl_power_manual.setText(dto.getFormattedForwardPower());
         }
-
     }
 
-    private static void updateSWR(String value) {
-        double swrValue = Double.parseDouble(value);
-        System.out.println("SWR: " + swrValue);
-        if (swrValue > 1.01 && swrValue < 1.5) {
+    private static void updateSWR(PowerDataDto dto) {
+        if (dto.getSWR() > 1.01 && dto.getSWR() < 1.5) {
             jl_SWR.setForeground(Color.GREEN);
-            jl_SWR.setText(Double.toString(swrValue));
-        } else if (swrValue >= 1.6 && swrValue <= 2.5) {
+            jl_SWR.setText(Double.toString(dto.getSWR()));
+        } else if (dto.getSWR() >= 1.6 && dto.getSWR() <= 2.5) {
             jl_SWR.setForeground(Color.ORANGE);
-            jl_SWR.setText(Double.toString(swrValue));
-        } else if (swrValue > 2.6) {
+            jl_SWR.setText(Double.toString(dto.getSWR()));
+        } else if (dto.getSWR() > 2.6) {
             jl_SWR.setForeground(Color.RED);
-            jl_SWR.setText(Double.toString(swrValue));
+            jl_SWR.setText(Double.toString(dto.getSWR()));
         }
-        if (swrValue == 1.00) {
+        if (dto.getSWR() == 1.00) {
             // Do nothing, keep the last state
         }
     }
