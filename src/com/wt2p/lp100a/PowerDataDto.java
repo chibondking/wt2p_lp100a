@@ -91,6 +91,11 @@ public class PowerDataDto extends Object implements Serializable {
     
     private void setSWR(double value) { this.swrValue = value; }
     
+    public int getSWRInteger() {
+        Double mValue = this.swrValue * 100;
+        return mValue.intValue();        
+    }
+    
     public Double getSWR() {
         return this.swrValue;
     }

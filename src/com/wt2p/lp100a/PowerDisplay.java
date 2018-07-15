@@ -74,9 +74,10 @@ public class PowerDisplay extends javax.swing.JFrame {
     
     private static void updateUserInterface(PowerDataDto dto) {
         updateForwardPower(dto);
+        updateForwardPowerBargraph(dto);
+        updateSWRBargraph(dto);
         updateTransmittingRadio(dto);
         updateSWR(dto);
-        jl_DbmValue.setText(dto.get_dBm().toString());
     }
 
 
@@ -96,34 +97,74 @@ public class PowerDisplay extends javax.swing.JFrame {
             jl_Tx2Active.setBackground(Color.BLACK);
         }
     }
-
-    private static void updateForwardPower(PowerDataDto dto) {
-        if (dto.getForwardPower() >= 0 && dto.getForwardPower() <= 600) {
-            jl_power_manual.setText(dto.getFormattedForwardPower());
-        } else if (dto.getForwardPower() > 600 && dto.getForwardPower() <= 900) {
-            jl_power_manual.setForeground(Color.ORANGE);
-            jl_power_manual.setText(dto.getFormattedForwardPower());
-        } else if (dto.getForwardPower() > 901) {
-            jl_power_manual.setForeground(Color.RED);
-            jl_power_manual.setText(dto.getFormattedForwardPower());
+    
+    private static void updateForwardPowerBargraph(PowerDataDto dto) {
+        if (dto.getForwardPower() >= 0) {
+            jpPwr0100.setValue(dto.getForwardPower().intValue());
         }
+        
+        if (dto.getForwardPower() > 100) {
+            jpPwr100500.setValue(dto.getForwardPower().intValue());
+        }
+        
+        if (dto.getForwardPower() > 600) {
+            jpPwr6001000.setValue(dto.getForwardPower().intValue());
+        }
+        
+        if (dto.getForwardPower() > 1000 && dto.getForwardPower() <= 1500) {
+            jpPwr10001500.setValue(dto.getForwardPower().intValue());
+        }
+        
         if (dto.getForwardPower() == 0) {
-            jl_power_manual.setForeground(Color.WHITE);
-            jl_power_manual.setText(dto.getFormattedForwardPower());
+            try {
+                Thread.sleep(20);
+            } catch (Exception ex) {
+                //do nothing
+            }
+            jpPwr0100.setValue(0);
+            jpPwr100500.setValue(0);
+            jpPwr6001000.setValue(0);
+            jpPwr10001500.setValue(0);
         }
+        
     }
 
-    private static void updateSWR(PowerDataDto dto) {
-        if (dto.getSWR() > 1.01 && dto.getSWR() < 1.5) {
-            jl_SWR.setForeground(Color.GREEN);
-            jl_SWR.setText(Double.toString(dto.getSWR()));
-        } else if (dto.getSWR() >= 1.6 && dto.getSWR() <= 2.5) {
-            jl_SWR.setForeground(Color.ORANGE);
-            jl_SWR.setText(Double.toString(dto.getSWR()));
-        } else if (dto.getSWR() > 2.6) {
-            jl_SWR.setForeground(Color.RED);
-            jl_SWR.setText(Double.toString(dto.getSWR()));
+    private static void updateForwardPower(PowerDataDto dto) {
+        jl_power_manual.setText(dto.getFormattedForwardPower());
+    }
+
+    private static void updateSWRBargraph(PowerDataDto dto) {
+        if (dto.getSWR() >= 1.01) {
+            jpSWRGreen.setValue(dto.getSWRInteger());
         }
+        
+        if (dto.getSWR() >= 1.51) {
+            jpSWRYellow.setValue(dto.getSWRInteger());
+        }
+        
+        if (dto.getSWR() >= 2.00) {
+            jpSWROrange.setValue(dto.getSWRInteger());
+        }
+        
+        if (dto.getSWR() >= 2.50) {
+            jpSWRRed.setValue(dto.getSWRInteger());
+        }
+        
+        if (dto.getSWR() == 1.00) {
+            try {
+                Thread.sleep(20);
+            } catch (Exception ex) {
+                //do nothing
+            }
+            jpSWRGreen.setValue(0);
+            jpSWRYellow.setValue(0);
+            jpSWROrange.setValue(0);
+            jpSWRRed.setValue(0);
+        }
+    }
+    private static void updateSWR(PowerDataDto dto) {
+        jl_SWR.setText(Double.toString(dto.getSWR()));
+
         if (dto.getSWR() == 1.00) {
             // Do nothing, keep the last state
         }
@@ -140,18 +181,24 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         mainPanel = new javax.swing.JPanel();
         jl_Power = new javax.swing.JLabel();
-        jl_Power1 = new javax.swing.JLabel();
-        jl_power_manual = new javax.swing.JLabel();
-        jl_DbmValue = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jl_SWR = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jl_Tx1Active = new javax.swing.JLabel();
         jl_Tx2Active = new javax.swing.JLabel();
         jtf_StatusField = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jpPwr0100 = new javax.swing.JProgressBar();
+        jl_power_manual = new javax.swing.JLabel();
+        jpPwr100500 = new javax.swing.JProgressBar();
+        jpPwr10001500 = new javax.swing.JProgressBar();
+        jpPwr6001000 = new javax.swing.JProgressBar();
+        swrPanel = new javax.swing.JPanel();
+        jl_SWR = new javax.swing.JLabel();
+        jpSWRGreen = new javax.swing.JProgressBar();
+        jpSWRYellow = new javax.swing.JProgressBar();
+        jpSWROrange = new javax.swing.JProgressBar();
+        jpSWRRed = new javax.swing.JProgressBar();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -160,6 +207,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         setTitle("WT2P LP-100A");
         setBackground(new java.awt.Color(0, 0, 0));
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         mainPanel.setBackground(new java.awt.Color(0, 0, 0));
         mainPanel.setForeground(new java.awt.Color(255, 255, 255));
@@ -170,30 +218,9 @@ public class PowerDisplay extends javax.swing.JFrame {
         jl_Power.setForeground(new java.awt.Color(255, 255, 255));
         jl_Power.setText("PWR");
 
-        jl_Power1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jl_Power1.setForeground(new java.awt.Color(255, 255, 255));
-        jl_Power1.setText("dBm");
-
-        jl_power_manual.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jl_power_manual.setForeground(new java.awt.Color(255, 255, 255));
-
-        jl_DbmValue.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jl_DbmValue.setForeground(new java.awt.Color(204, 204, 204));
-        jl_DbmValue.setText("0");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 153, 0));
-        jLabel1.setText("Watts");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("SWR");
-
-        jl_SWR.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jl_SWR.setForeground(new java.awt.Color(102, 255, 0));
-        jl_SWR.setText("-");
-
-        jSeparator1.setForeground(new java.awt.Color(51, 51, 255));
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Radio 1");
@@ -219,6 +246,79 @@ public class PowerDisplay extends javax.swing.JFrame {
         jtf_StatusField.setForeground(new java.awt.Color(204, 204, 204));
         jtf_StatusField.setBorder(null);
 
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jpPwr0100.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwr0100.setForeground(new java.awt.Color(0, 51, 153));
+        jpPwr0100.setBorderPainted(false);
+        jpPwr0100.setString("0");
+        jPanel1.add(jpPwr0100, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 90, 30));
+
+        jl_power_manual.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jl_power_manual.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jl_power_manual, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 30));
+
+        jpPwr100500.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwr100500.setForeground(new java.awt.Color(0, 51, 153));
+        jpPwr100500.setMaximum(500);
+        jpPwr100500.setMinimum(100);
+        jpPwr100500.setBorderPainted(false);
+        jPanel1.add(jpPwr100500, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 100, 30));
+
+        jpPwr10001500.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwr10001500.setForeground(new java.awt.Color(255, 102, 102));
+        jpPwr10001500.setMaximum(1500);
+        jpPwr10001500.setMinimum(500);
+        jpPwr10001500.setBorderPainted(false);
+        jPanel1.add(jpPwr10001500, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 70, 30));
+
+        jpPwr6001000.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwr6001000.setForeground(new java.awt.Color(204, 102, 0));
+        jpPwr6001000.setMaximum(1000);
+        jpPwr6001000.setMinimum(600);
+        jpPwr6001000.setBorderPainted(false);
+        jPanel1.add(jpPwr6001000, new org.netbeans.lib.awtextra.AbsoluteConstraints(241, 0, 50, 30));
+
+        swrPanel.setBackground(new java.awt.Color(0, 0, 0));
+        swrPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jl_SWR.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jl_SWR.setForeground(new java.awt.Color(255, 255, 255));
+        jl_SWR.setMaximumSize(new java.awt.Dimension(44, 22));
+        jl_SWR.setMinimumSize(new java.awt.Dimension(44, 22));
+        jl_SWR.setPreferredSize(new java.awt.Dimension(44, 22));
+        swrPanel.add(jl_SWR, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 30));
+
+        jpSWRGreen.setBackground(new java.awt.Color(0, 0, 0));
+        jpSWRGreen.setForeground(new java.awt.Color(0, 51, 153));
+        jpSWRGreen.setMaximum(150);
+        jpSWRGreen.setMinimum(100);
+        jpSWRGreen.setBorderPainted(false);
+        jpSWRGreen.setOpaque(true);
+        swrPanel.add(jpSWRGreen, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 70, 30));
+
+        jpSWRYellow.setBackground(new java.awt.Color(0, 0, 0));
+        jpSWRYellow.setForeground(new java.awt.Color(153, 153, 0));
+        jpSWRYellow.setMaximum(200);
+        jpSWRYellow.setMinimum(150);
+        jpSWRYellow.setBorderPainted(false);
+        swrPanel.add(jpSWRYellow, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 60, 30));
+
+        jpSWROrange.setBackground(new java.awt.Color(0, 0, 0));
+        jpSWROrange.setForeground(new java.awt.Color(204, 102, 0));
+        jpSWROrange.setMaximum(250);
+        jpSWROrange.setMinimum(200);
+        jpSWROrange.setBorderPainted(false);
+        swrPanel.add(jpSWROrange, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 60, 30));
+
+        jpSWRRed.setBackground(new java.awt.Color(0, 0, 0));
+        jpSWRRed.setForeground(new java.awt.Color(255, 102, 102));
+        jpSWRRed.setMaximum(300);
+        jpSWRRed.setMinimum(250);
+        jpSWRRed.setBorderPainted(false);
+        swrPanel.add(jpSWRRed, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 60, 30));
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -227,76 +327,52 @@ public class PowerDisplay extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jl_Tx1Active)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jtf_StatusField)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jl_SWR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jl_Tx2Active))
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(mainPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jl_Tx1Active))
-                                    .addGroup(mainPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jl_Tx2Active))
-                                    .addGroup(mainPanelLayout.createSequentialGroup()
-                                        .addComponent(jl_Power1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jl_DbmValue, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jtf_StatusField))
-                        .addGap(39, 39, 39))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
-                                .addComponent(jl_Power, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jl_Power, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jl_power_manual, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1)))
-                        .addContainerGap())))
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(swrPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(5, Short.MAX_VALUE))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jl_Power, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)))
-                        .addGap(21, 21, 21))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addComponent(jl_power_manual, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                    .addComponent(jl_Power, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jl_SWR))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(swrPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jl_Tx1Active)
-                    .addComponent(jLabel5))
-                .addGap(7, 7, 7)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jl_Tx2Active))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jl_Power1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jl_DbmValue, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addComponent(jl_Tx1Active))
+                .addGap(18, 18, 18)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jl_Tx2Active)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtf_StatusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
+
+        getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 180));
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -313,17 +389,6 @@ public class PowerDisplay extends javax.swing.JFrame {
         menuBar.add(fileMenu);
 
         setJMenuBar(menuBar);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 246, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -357,21 +422,27 @@ public class PowerDisplay extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JSeparator jSeparator1;
-    public static javax.swing.JLabel jl_DbmValue;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel jl_Power;
-    private javax.swing.JLabel jl_Power1;
     public static javax.swing.JLabel jl_SWR;
     public static javax.swing.JLabel jl_Tx1Active;
     public static javax.swing.JLabel jl_Tx2Active;
     public static javax.swing.JLabel jl_power_manual;
+    private static javax.swing.JProgressBar jpPwr0100;
+    private static javax.swing.JProgressBar jpPwr10001500;
+    private static javax.swing.JProgressBar jpPwr100500;
+    private static javax.swing.JProgressBar jpPwr6001000;
+    private static javax.swing.JProgressBar jpSWRGreen;
+    private static javax.swing.JProgressBar jpSWROrange;
+    private static javax.swing.JProgressBar jpSWRRed;
+    private static javax.swing.JProgressBar jpSWRYellow;
     private static javax.swing.JTextField jtf_StatusField;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JPanel swrPanel;
     // End of variables declaration//GEN-END:variables
 
 }
