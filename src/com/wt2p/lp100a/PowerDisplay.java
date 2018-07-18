@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.wt2p.lp100a;
 
 import com.serialpundit.core.SerialComException;
@@ -18,8 +13,9 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static SerialComManager scm;
     private static long handle;
-    
-    private static boolean isNetworkEnabled = false;
+    private static String comPort;
+    private static boolean isNetworkEnabled;
+    private static boolean isUsingLatestLPFirmware;
 
     /**
      * Creates new form PowerDisplay
@@ -30,7 +26,7 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static void connectToComPort() throws SerialComException, IOException {
         scm = new SerialComManager();
-        handle = scm.openComPort("COM9", true, true, true);
+        handle = scm.openComPort(comPort, true, true, true);
         scm.configureComPortData(handle, SerialComManager.DATABITS.DB_8, SerialComManager.STOPBITS.SB_1, SerialComManager.PARITY.P_NONE, SerialComManager.BAUDRATE.B115200, 0);
         scm.configureComPortControl(handle, SerialComManager.FLOWCONTROL.NONE, 'x', 'x', false, false);
     }
@@ -53,6 +49,10 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static void setNetworkEnabled(boolean value) {
         isNetworkEnabled = value;
     }
+    
+    private static void setIsUsingLatestLPFirmware(boolean value) {
+        isUsingLatestLPFirmware = value;
+    }
         
     
     private static void updateStatusField(String value) {
@@ -62,7 +62,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static void parseStringFromLP100A(String data) {
         String[] dataArray = data.substring(1).split(",");
         try {
-            PowerDataDto powerDto = new PowerDataDto(dataArray);
+            PowerDataDto powerDto = new PowerDataDto(dataArray, isUsingLatestLPFirmware);
             updateUserInterface(powerDto);
             
             
@@ -84,12 +84,12 @@ public class PowerDisplay extends javax.swing.JFrame {
         if (dto.getTransmittingRadio() == 2 && dto.getForwardPower() > 0) {
             jl_Tx2Active.setForeground(Color.WHITE);
             jl_Tx2Active.setBackground(Color.RED);
-        } else if (dto.getTransmittingRadio() == 0 && dto.getForwardPower() > 0) {
+        } else if (dto.getTransmittingRadio() == 1 && dto.getForwardPower() > 0) {
             jl_Tx1Active.setForeground(Color.WHITE);
             jl_Tx1Active.setBackground(Color.RED);
         }
 
-        if (dto.getTransmittingRadio() == 2 && dto.getForwardPower() == 0) {
+        if (dto.getForwardPower() == 0) {
             jl_Tx1Active.setForeground(Color.LIGHT_GRAY);
             jl_Tx2Active.setForeground(Color.LIGHT_GRAY);
             jl_Tx1Active.setBackground(Color.BLACK);
@@ -447,6 +447,17 @@ public class PowerDisplay extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     public static void main(String args[]) {
+        
+        if (args.length > 0) {
+            comPort = args[0];
+            setNetworkEnabled(Boolean.valueOf(args[1]));
+            setIsUsingLatestLPFirmware(Boolean.valueOf(args[2]));
+            
+        } else {
+            comPort = "COM9";
+            setNetworkEnabled(false);
+            setIsUsingLatestLPFirmware(false);           
+        } 
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
