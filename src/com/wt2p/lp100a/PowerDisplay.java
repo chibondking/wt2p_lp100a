@@ -46,7 +46,7 @@ public class PowerDisplay extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            updateStatusField("ERR comm with LP100");
+            updateStatusField("ERR comm with LP100. Restart.");
         }
     }
     
@@ -120,12 +120,13 @@ public class PowerDisplay extends javax.swing.JFrame {
             jpPwrHigh.setValue(0);
         }
         
+        if (dto.getForwardPower() > 1500 && dto.getForwardPower() <= 2000) {
+            jpPwrHighHigh.setValue(dto.getForwardPower().intValue());
+        } else if(dto.getForwardPower() < 1500) {
+            jpPwrHighHigh.setValue(0);
+        }
+        
         if (dto.getForwardPower() == 0) {
-            try {
-                Thread.sleep(20);
-            } catch (Exception ex) {
-                //do nothing
-            }
             jpPwrLow.setValue(0);
             jpPwrLowMid.setValue(0);
             jpPwrMid.setValue(0);
@@ -160,11 +161,6 @@ public class PowerDisplay extends javax.swing.JFrame {
         } 
         
         if (dto.getSWR() == 1.00) {
-            try {
-                Thread.sleep(20);
-            } catch (Exception ex) {
-                //do nothing
-            }
             jpSWRGreen.setValue(0);
             jpSWRYellow.setValue(0);
             jpSWROrange.setValue(0);
@@ -173,10 +169,11 @@ public class PowerDisplay extends javax.swing.JFrame {
         }
     }
     private static void updateSWR(PowerDataDto dto) {
-        jl_SWR.setText(Double.toString(dto.getSWR()));
-
+        
         if (dto.getSWR() == 1.00) {
             // Do nothing, keep the last state
+        } else {
+            jl_SWR.setText(Double.toString(dto.getSWR()));     
         }
     }
 
@@ -203,6 +200,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpPwrLowMid = new javax.swing.JProgressBar();
         jpPwrHigh = new javax.swing.JProgressBar();
         jpPwrMid = new javax.swing.JProgressBar();
+        jpPwrHighHigh = new javax.swing.JProgressBar();
         swrPanel = new javax.swing.JPanel();
         jl_SWR = new javax.swing.JLabel();
         jpSWRGreen = new javax.swing.JProgressBar();
@@ -222,6 +220,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jlSWRAlarm = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -298,20 +297,27 @@ public class PowerDisplay extends javax.swing.JFrame {
         jPanel1.add(jpPwrLowMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 90, 30));
 
         jpPwrHigh.setBackground(new java.awt.Color(0, 0, 0));
-        jpPwrHigh.setForeground(new java.awt.Color(255, 102, 102));
+        jpPwrHigh.setForeground(new java.awt.Color(204, 102, 0));
         jpPwrHigh.setMaximum(1500);
-        jpPwrHigh.setMinimum(500);
+        jpPwrHigh.setMinimum(1000);
         jpPwrHigh.setBorderPainted(false);
-        jPanel1.add(jpPwrHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 60, 30));
+        jPanel1.add(jpPwrHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 30, 30));
 
         jpPwrMid.setBackground(new java.awt.Color(0, 0, 0));
-        jpPwrMid.setForeground(new java.awt.Color(204, 102, 0));
+        jpPwrMid.setForeground(new java.awt.Color(153, 153, 0));
         jpPwrMid.setMaximum(1000);
         jpPwrMid.setMinimum(500);
         jpPwrMid.setBorderPainted(false);
         jPanel1.add(jpPwrMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 40, 30));
 
-        mainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 11, 355, 33));
+        jpPwrHighHigh.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwrHighHigh.setForeground(new java.awt.Color(255, 0, 0));
+        jpPwrHighHigh.setMaximum(2000);
+        jpPwrHighHigh.setMinimum(1500);
+        jpPwrHighHigh.setBorderPainted(false);
+        jPanel1.add(jpPwrHighHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 30, 30));
+
+        mainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 11, 355, 30));
 
         swrPanel.setBackground(new java.awt.Color(0, 0, 0));
         swrPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -346,7 +352,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         swrPanel.add(jpSWROrange, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 50, 30));
 
         jpSWRRed.setBackground(new java.awt.Color(0, 0, 0));
-        jpSWRRed.setForeground(new java.awt.Color(255, 102, 102));
+        jpSWRRed.setForeground(new java.awt.Color(255, 0, 0));
         jpSWRRed.setMaximum(300);
         jpSWRRed.setMinimum(250);
         jpSWRRed.setBorderPainted(false);
@@ -356,31 +362,31 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         jLabel1.setForeground(new java.awt.Color(204, 204, 0));
         jLabel1.setText("0");
-        mainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 45, 14, -1));
+        mainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 14, -1));
 
         jLabel2.setForeground(new java.awt.Color(204, 204, 0));
         jLabel2.setText("100");
-        mainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 45, -1, -1));
+        mainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
 
         jLabel4.setForeground(new java.awt.Color(204, 204, 0));
         jLabel4.setText("50");
-        mainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 45, -1, -1));
+        mainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, -1, -1));
 
         jLabel7.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel7.setText("250");
-        mainPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 45, -1, -1));
+        jLabel7.setText("300");
+        mainPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
 
         jLabel8.setForeground(new java.awt.Color(204, 204, 0));
         jLabel8.setText("500");
-        mainPanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(301, 45, -1, -1));
+        mainPanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
 
         jLabel9.setForeground(new java.awt.Color(204, 204, 0));
         jLabel9.setText("1k");
-        mainPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(347, 45, -1, -1));
+        mainPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, -1, -1));
 
         jLabel10.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel10.setText("1.5k");
-        mainPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(394, 45, -1, -1));
+        jLabel10.setText("2k");
+        mainPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, -1, -1));
 
         jLabel11.setForeground(new java.awt.Color(204, 204, 0));
         jLabel11.setText("1");
@@ -405,6 +411,10 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlSWRAlarm.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlSWRAlarm.setText("HI SWR");
         mainPanel.add(jlSWRAlarm, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
+
+        jLabel16.setForeground(new java.awt.Color(204, 204, 0));
+        jLabel16.setText("1.5k");
+        mainPanel.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 30, -1));
 
         getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 180));
 
@@ -463,6 +473,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -479,6 +490,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     public static javax.swing.JLabel jl_Tx2Active;
     public static javax.swing.JLabel jl_power_manual;
     private static javax.swing.JProgressBar jpPwrHigh;
+    private static javax.swing.JProgressBar jpPwrHighHigh;
     private static javax.swing.JProgressBar jpPwrLow;
     private static javax.swing.JProgressBar jpPwrLowMid;
     private static javax.swing.JProgressBar jpPwrMid;
