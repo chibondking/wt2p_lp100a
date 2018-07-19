@@ -109,8 +109,5 @@ public class PowerDataDto extends Object implements Serializable {
     
     public Double getSWR() {
         return this.swrValue;
-    }
-    
-    
-    
+    }  
 }
