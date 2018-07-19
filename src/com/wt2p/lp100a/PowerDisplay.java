@@ -136,7 +136,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     }
 
     private static void updateForwardPower(PowerDataDto dto) {
-        jl_power_manual.setText(dto.getFormattedForwardPower());
+        jlPowerText.setText(dto.getFormattedForwardPower());
     }
 
     private static void updateSWRBargraph(PowerDataDto dto) {
@@ -192,7 +192,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jtf_StatusField = new javax.swing.JTextField();
         jpPwrBargraphPanel = new javax.swing.JPanel();
         jpPwrLow = new javax.swing.JProgressBar();
-        jl_power_manual = new javax.swing.JLabel();
+        jlPowerText = new javax.swing.JLabel();
         jpPwrLowMid = new javax.swing.JProgressBar();
         jpPwrHigh = new javax.swing.JProgressBar();
         jpPwrMid = new javax.swing.JProgressBar();
@@ -203,20 +203,20 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpSWRYellow = new javax.swing.JProgressBar();
         jpSWROrange = new javax.swing.JProgressBar();
         jpSWRRed = new javax.swing.JProgressBar();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        jlPwr0 = new javax.swing.JLabel();
+        jlPwr100 = new javax.swing.JLabel();
+        jlPwr50 = new javax.swing.JLabel();
+        jlPwr300 = new javax.swing.JLabel();
+        jlPwr500 = new javax.swing.JLabel();
+        jlPwr1000 = new javax.swing.JLabel();
+        jlPwr2000 = new javax.swing.JLabel();
+        jlSWR1 = new javax.swing.JLabel();
+        jlSWR15 = new javax.swing.JLabel();
+        jlSWR20 = new javax.swing.JLabel();
+        jlSWR25 = new javax.swing.JLabel();
+        jlSWR30 = new javax.swing.JLabel();
         jlSWRAlarm = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
+        jlPwr1500 = new javax.swing.JLabel();
         jpRadioSelector = new javax.swing.JPanel();
         jlRadio1 = new javax.swing.JLabel();
         jl_Tx1Active = new javax.swing.JLabel();
@@ -231,7 +231,6 @@ public class PowerDisplay extends javax.swing.JFrame {
         setTitle("WT2P LP-100A Utility");
         setBackground(new java.awt.Color(0, 0, 0));
         setLocationByPlatform(true);
-        setMaximumSize(new java.awt.Dimension(430, 180));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -267,9 +266,9 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpPwrLow.setString("0");
         jpPwrBargraphPanel.add(jpPwrLow, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 90, 30));
 
-        jl_power_manual.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jl_power_manual.setForeground(new java.awt.Color(255, 255, 255));
-        jpPwrBargraphPanel.add(jl_power_manual, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 30));
+        jlPowerText.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlPowerText.setForeground(new java.awt.Color(255, 255, 255));
+        jpPwrBargraphPanel.add(jlPowerText, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 30));
 
         jpPwrLowMid.setBackground(new java.awt.Color(0, 0, 0));
         jpPwrLowMid.setForeground(new java.awt.Color(0, 51, 153));
@@ -342,69 +341,69 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         mainPanel.add(jpSWRPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 65, -1, 34));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel1.setText("0");
-        mainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 14, -1));
+        jlPwr0.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr0.setForeground(new java.awt.Color(204, 204, 0));
+        jlPwr0.setText("0");
+        mainPanel.add(jlPwr0, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 14, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel2.setText("100");
-        mainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
+        jlPwr100.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr100.setForeground(new java.awt.Color(204, 204, 0));
+        jlPwr100.setText("100");
+        mainPanel.add(jlPwr100, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel4.setText("50");
-        mainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, -1, -1));
+        jlPwr50.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr50.setForeground(new java.awt.Color(204, 204, 0));
+        jlPwr50.setText("50");
+        mainPanel.add(jlPwr50, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, -1, -1));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel7.setText("300");
-        mainPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
+        jlPwr300.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr300.setForeground(new java.awt.Color(204, 204, 0));
+        jlPwr300.setText("300");
+        mainPanel.add(jlPwr300, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel8.setText("500");
-        mainPanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+        jlPwr500.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr500.setForeground(new java.awt.Color(204, 204, 0));
+        jlPwr500.setText("500");
+        mainPanel.add(jlPwr500, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel9.setText("1k");
-        mainPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, -1, -1));
+        jlPwr1000.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr1000.setForeground(new java.awt.Color(204, 204, 0));
+        jlPwr1000.setText("1k");
+        mainPanel.add(jlPwr1000, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, -1, -1));
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel10.setText("2k");
-        mainPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, -1, -1));
+        jlPwr2000.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr2000.setForeground(new java.awt.Color(204, 204, 0));
+        jlPwr2000.setText("2k");
+        mainPanel.add(jlPwr2000, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, -1, -1));
 
-        jLabel11.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel11.setText("1");
-        mainPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, -1));
+        jlSWR1.setForeground(new java.awt.Color(204, 204, 0));
+        jlSWR1.setText("1");
+        mainPanel.add(jlSWR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, -1));
 
-        jLabel12.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel12.setText("1.5");
-        mainPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
+        jlSWR15.setForeground(new java.awt.Color(204, 204, 0));
+        jlSWR15.setText("1.5");
+        mainPanel.add(jlSWR15, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
 
-        jLabel13.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel13.setText("2.0");
-        mainPanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, -1, -1));
+        jlSWR20.setForeground(new java.awt.Color(204, 204, 0));
+        jlSWR20.setText("2.0");
+        mainPanel.add(jlSWR20, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, -1, -1));
 
-        jLabel14.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel14.setText("2.5");
-        mainPanel.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, -1, -1));
+        jlSWR25.setForeground(new java.awt.Color(204, 204, 0));
+        jlSWR25.setText("2.5");
+        mainPanel.add(jlSWR25, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, -1, -1));
 
-        jLabel15.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel15.setText("3.0");
-        mainPanel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, -1, -1));
+        jlSWR30.setForeground(new java.awt.Color(204, 204, 0));
+        jlSWR30.setText("3.0");
+        mainPanel.add(jlSWR30, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, -1, -1));
 
         jlSWRAlarm.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlSWRAlarm.setText("HI SWR");
         mainPanel.add(jlSWRAlarm, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel16.setText("1.5k");
-        mainPanel.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 20, -1));
+        jlPwr1500.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr1500.setForeground(new java.awt.Color(204, 204, 0));
+        jlPwr1500.setText("1.5k");
+        mainPanel.add(jlPwr1500, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 20, -1));
 
         jpRadioSelector.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -500,7 +499,7 @@ public class PowerDisplay extends javax.swing.JFrame {
             setIsUsingLatestLPFirmware(Boolean.valueOf(args[2]));
             
         } else {
-            comPort = "COM9";
+            comPort = "COM1";
             setNetworkEnabled(false);
             setIsUsingLatestLPFirmware(false);           
         } 
@@ -526,29 +525,29 @@ public class PowerDisplay extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jlNetworkActive;
+    public static javax.swing.JLabel jlPowerText;
+    private javax.swing.JLabel jlPwr0;
+    private javax.swing.JLabel jlPwr100;
+    private javax.swing.JLabel jlPwr1000;
+    private javax.swing.JLabel jlPwr1500;
+    private javax.swing.JLabel jlPwr2000;
+    private javax.swing.JLabel jlPwr300;
+    private javax.swing.JLabel jlPwr50;
+    private javax.swing.JLabel jlPwr500;
     private javax.swing.JLabel jlRadio1;
     private javax.swing.JLabel jlSWR;
+    private javax.swing.JLabel jlSWR1;
+    private javax.swing.JLabel jlSWR15;
+    private javax.swing.JLabel jlSWR20;
+    private javax.swing.JLabel jlSWR25;
+    private javax.swing.JLabel jlSWR30;
     private static javax.swing.JLabel jlSWRAlarm;
     private javax.swing.JLabel jl_Power;
     public static javax.swing.JLabel jl_SWR;
     public static javax.swing.JLabel jl_Tx1Active;
     public static javax.swing.JLabel jl_Tx2Active;
-    public static javax.swing.JLabel jl_power_manual;
     private javax.swing.JPanel jpPwrBargraphPanel;
     private static javax.swing.JProgressBar jpPwrHigh;
     private static javax.swing.JProgressBar jpPwrHighHigh;
