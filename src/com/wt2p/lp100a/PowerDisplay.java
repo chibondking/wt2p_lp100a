@@ -457,6 +457,7 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         mainPanel.add(jpRadioSelector, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 100, 40));
 
+        jlNetworkActive.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlNetworkActive.setForeground(new java.awt.Color(153, 153, 153));
         jlNetworkActive.setText("Network Active");
         mainPanel.add(jlNetworkActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 140, 80, -1));
