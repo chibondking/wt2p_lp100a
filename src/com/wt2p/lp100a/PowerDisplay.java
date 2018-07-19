@@ -253,7 +253,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jtf_StatusField.setEditable(false);
         jtf_StatusField.setBackground(new java.awt.Color(0, 0, 0));
         jtf_StatusField.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jtf_StatusField.setForeground(new java.awt.Color(204, 204, 204));
+        jtf_StatusField.setForeground(new java.awt.Color(51, 51, 51));
         jtf_StatusField.setBorder(null);
         mainPanel.add(jtf_StatusField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 163, 415, -1));
 
