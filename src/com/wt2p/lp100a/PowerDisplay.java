@@ -496,8 +496,10 @@ public class PowerDisplay extends javax.swing.JFrame {
         //TODO: Use a argument parser here to make things simpler
         if (args.length > 0) {
             comPort = args[0];
-            setNetworkEnabled(Boolean.valueOf(args[1]));
-            setIsUsingLatestLPFirmware(Boolean.valueOf(args[2]));
+            setIsUsingLatestLPFirmware(Boolean.valueOf(args[1]));
+            //Disable networking support for now.
+            //setNetworkEnabled(Boolean.valueOf(args[2]));
+            setNetworkEnabled(false);
             
         } else {
             comPort = "COM1";
