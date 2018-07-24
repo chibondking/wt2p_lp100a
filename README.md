@@ -9,9 +9,9 @@ If you're using the latest firmware **(TBD)** for your LP-100A, this OSD softwar
 ## Colors
 
 Power Meter color schemes:
- * Dark blue for Low Power (0-500 watts)
+ * Dark Blue for Low Power (0-500 watts)
  * Dark Yellow for Medium Power (500-1000 watts)
- * Dark Orage for High Power (1000-1500 watts)
+ * Dark Orange for High Power (1000-1500 watts)
  * Bright Red for 1500-2000 watts)
 
 SWR Meter color schemes:
@@ -24,8 +24,25 @@ If the SWR is above 3.0, an additional bright red alert text will display to the
 
 ![High SWR](img/meter_hi_swr.png)
 
-## Running
-To run the LP-100A software, unzip the WT2P-LP100A.zip file to a location of your choice.
+## Downloading and Installing
+
+Click on [Releases](https://github.com/chibondking/wt2p_lp100a/releases) to get a list of current releases and download the WT2P_LP100A.zip file.
+
+Unzip this file to a location easily remembered for you (i.e. c:\Ham\WT2P_LP100 - or similar)
+
+### On Windows:
+
+It's easiest to create a desktop shortcut. Right click on the JAR file and create shortcut. Edit your shortcut like this, specifying the command line options below
+
+![](img/windows_shortcut.png)
+
+Move this to your Windows desktop.
+
+### On Linux/OSX:
+
+Start from the command line or create a link that passes in the correct parameters (com/serial port and latest firmware flag)
+
+### Running
 
 You can manually run this via the command line:
 
@@ -49,3 +66,8 @@ If all is successful, you should see the LP-100A software display on screen and 
 * Remote networking (client/server) support
 * Dual Coupler Support: Identify which coupler has active RF
 * Ability to customize power and swr bar colors
+
+## License
+GPL v.3
+
+Please feel free to contribute enhancements as well.
