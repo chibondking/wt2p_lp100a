@@ -22,6 +22,7 @@ public class PowerDataDto extends Object implements Serializable {
     private DecimalFormat powerFormat = new DecimalFormat("#,##0.0");
     
     public PowerDataDto(String[] dataArray, boolean latestLpFirmware) {
+        this.isUsingLatestLPFirmware = latestLpFirmware;
         this.parseDataArray(dataArray);
     }
     
