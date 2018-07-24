@@ -7,10 +7,19 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="WT2P_OSD_LP100A" default="default" basedir=".">
-    <description>Builds, tests, and runs the project WT2P_OSD_LP100A.</description>
+<project name="WT2P_LP100A" default="default" basedir=".">
+    <description>Builds, tests, and runs the project WT2P_LP100A.</description>
     <import file="nbproject/build-impl.xml"/>
+
+    
     <!--
+    
+    <target name="jar" depends="clean,compile" >
+        <jar destfile="./dist/WT2P_LP100A.jar">
+            <fileset dir="./lib" includes="*.jar" />
+            <fileset dir="./build/classes" excludes="**/form/*.class,**/orm/*.class"/>
+        </jar>
+    </target>
 
     There exist several targets which are by default empty and which can be 
     used for execution of your tasks. These targets are usually executed 

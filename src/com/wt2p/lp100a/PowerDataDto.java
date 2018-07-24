@@ -3,6 +3,10 @@ package com.wt2p.lp100a;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 
+/**
+ *
+ * @author cedrickj
+ */
 public class PowerDataDto extends Object implements Serializable {
     
     private double forwardPower;
@@ -10,23 +14,30 @@ public class PowerDataDto extends Object implements Serializable {
     private double phaseValue;
     private double alarmSetPoint;
     private String callsign;
-    //This is listed as power range but is used to identify the transmitter for now
-    private double transmittingRadio;
+    private int transmittingRadio;
+    private boolean isUsingLatestLPFirmware;
     private double peakHold;
     private double dBm;
     private double swrValue;
     private DecimalFormat powerFormat = new DecimalFormat("#,##0.0");
     
-    public PowerDataDto(String[] dataArray) {
+    public PowerDataDto(String[] dataArray, boolean latestLpFirmware) {
+        this.parseDataArray(dataArray);
+    }
+    
+    private void parseDataArray(String[] dataArray) {
         this.setForwardPower(convertValueToDouble(dataArray[0]));
         this.setZValue(convertValueToDouble(dataArray[1]));
         this.setPhaseValue(convertValueToDouble(dataArray[2]));
         this.setAlarmSetPoint(convertValueToDouble(dataArray[3]));
         this.setCallsign(dataArray[4]);
-        this.setTransmittingRadio(convertValueToDouble(dataArray[5]));
         this.setPeakHold(convertValueToDouble(dataArray[6]));
         this.setdBm(convertValueToDouble(dataArray[7]));
         this.setSWR(convertValueToDouble(dataArray[8]));
+        
+        if (isUsingLatestLPFirmware) {
+            this.setTransmittingRadio(Integer.parseInt(dataArray[9]));
+        }
     }
     
     private double convertValueToDouble(String value) {
@@ -69,11 +80,11 @@ public class PowerDataDto extends Object implements Serializable {
         return this.callsign;
     }
     
-    private void setTransmittingRadio(double value) {
+    private void setTransmittingRadio(int value) {
         this.transmittingRadio = value; 
     }
     
-    public Double getTransmittingRadio() {
+    public int getTransmittingRadio() {
         return this.transmittingRadio;
     }
     
@@ -91,10 +102,12 @@ public class PowerDataDto extends Object implements Serializable {
     
     private void setSWR(double value) { this.swrValue = value; }
     
-    public Double getSWR() {
-        return this.swrValue;
+    public int getSWRInteger() {
+        Double mValue = this.swrValue * 100;
+        return mValue.intValue();        
     }
     
-    
-    
+    public Double getSWR() {
+        return this.swrValue;
+    }  
 }
