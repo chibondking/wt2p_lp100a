@@ -1,5 +1,7 @@
 # LP100A OSD Serial Interface
 
+![](img/meter_mid_power.png)
+
 This is a Java application that allows for people to connect to a [LP-100A](http://www.telepostinc.com/lp100.html) device and display on screen forward power and SWR as seen on the actual LP-100A wattmeter. Current initial support will support single coupler and dual coupler features (dual coupler sampling is detected automatically).
 
 If you're using the latest firmware **(TBD)** for your LP-100A, this OSD software will tell you which coupler (Radio 1 or Radio 2) is currently transmitting.
@@ -19,6 +21,8 @@ SWR Meter color schemes:
 * Red: 2.50 +
 
 If the SWR is above 3.0, an additional bright red alert text will display to the right of the SWR bargraph.
+
+![High SWR](img/meter_hi_swr.png)
 
 ## Running
 To run the LP-100A software, unzip the WT2P-LP100A.zip file to a location of your choice.
