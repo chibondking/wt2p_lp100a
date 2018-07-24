@@ -2,7 +2,7 @@
 
 ![](img/meter_mid_power.png)
 
-This is a Java application that allows for people to connect to a [LP-100A](http://www.telepostinc.com/lp100.html) device and display on screen forward power and SWR as seen on the actual LP-100A wattmeter. The initial version will support single coupler and dual coupler features (dual coupler sampling is detected automatically).
+This is a Java application that allows for people to connect to a [LP-100A](http://www.telepostinc.com/lp100.html) device and display on screen forward Power and SWR as seen on the actual LP-100A wattmeter. The utility supports single coupler and dual coupler features (dual coupler sampling is detected automatically).
 
 If you're using the latest firmware **(TBD)** for the LP-100A, the program will tell you which coupler (Radio 1 or Radio 2) is currently transmitting.
 
