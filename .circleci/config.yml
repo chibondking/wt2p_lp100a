@@ -22,5 +22,5 @@ jobs:
       - checkout
 
       # build!
-      - run: ant default
+      - run: ant clean compile
 

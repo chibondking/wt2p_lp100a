@@ -24,3 +24,4 @@ nbproject/private/private.xml
 nbproject/private/private.properties
 .DS_Store
 /dist/
+build/built-jar.properties
