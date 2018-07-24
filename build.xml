@@ -10,17 +10,9 @@
 <project name="WT2P_LP100A" default="default" basedir=".">
     <description>Builds, tests, and runs the project WT2P_LP100A.</description>
     <import file="nbproject/build-impl.xml"/>
-
     
+    <target name="wt2p-jar" depends="clean,compile,jar"/>
     <!--
-    
-    <target name="jar" depends="clean,compile" >
-        <jar destfile="./dist/WT2P_LP100A.jar">
-            <fileset dir="./lib" includes="*.jar" />
-            <fileset dir="./build/classes" excludes="**/form/*.class,**/orm/*.class"/>
-        </jar>
-    </target>
-
     There exist several targets which are by default empty and which can be 
     used for execution of your tasks. These targets are usually executed 
     before and after some main targets. They are: 
