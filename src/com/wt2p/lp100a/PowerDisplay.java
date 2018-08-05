@@ -251,12 +251,12 @@ public class PowerDisplay extends javax.swing.JFrame {
         jl_Power.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jl_Power.setForeground(new java.awt.Color(255, 255, 255));
         jl_Power.setText("PWR");
-        mainPanel.add(jl_Power, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 46, 25));
+        mainPanel.add(jl_Power, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 30));
 
         jlSWR.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlSWR.setForeground(new java.awt.Color(255, 255, 255));
         jlSWR.setText("SWR");
-        mainPanel.add(jlSWR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 65, -1, 25));
+        mainPanel.add(jlSWR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, 25));
 
         jtf_StatusField.setEditable(false);
         jtf_StatusField.setBackground(new java.awt.Color(0, 0, 0));
@@ -272,47 +272,49 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpPwrLow.setForeground(new java.awt.Color(0, 51, 153));
         jpPwrLow.setBorderPainted(false);
         jpPwrLow.setString("0");
-        jpPwrBargraphPanel.add(jpPwrLow, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 90, 30));
+        jpPwrBargraphPanel.add(jpPwrLow, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 90, 30));
 
-        jlPowerText.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlPowerText.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlPowerText.setForeground(new java.awt.Color(255, 255, 255));
-        jpPwrBargraphPanel.add(jlPowerText, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 30));
+        jlPowerText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jpPwrBargraphPanel.add(jlPowerText, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 30));
 
         jpPwrLowMid.setBackground(new java.awt.Color(0, 0, 0));
         jpPwrLowMid.setForeground(new java.awt.Color(0, 51, 153));
         jpPwrLowMid.setMaximum(500);
         jpPwrLowMid.setMinimum(100);
         jpPwrLowMid.setBorderPainted(false);
-        jpPwrBargraphPanel.add(jpPwrLowMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 90, 30));
+        jpPwrBargraphPanel.add(jpPwrLowMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 90, 30));
 
         jpPwrHigh.setBackground(new java.awt.Color(0, 0, 0));
         jpPwrHigh.setForeground(new java.awt.Color(204, 102, 0));
         jpPwrHigh.setMaximum(1500);
         jpPwrHigh.setMinimum(1000);
         jpPwrHigh.setBorderPainted(false);
-        jpPwrBargraphPanel.add(jpPwrHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 30, 30));
+        jpPwrBargraphPanel.add(jpPwrHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 30, 30));
 
         jpPwrMid.setBackground(new java.awt.Color(0, 0, 0));
         jpPwrMid.setForeground(new java.awt.Color(153, 153, 0));
         jpPwrMid.setMaximum(1000);
         jpPwrMid.setMinimum(500);
         jpPwrMid.setBorderPainted(false);
-        jpPwrBargraphPanel.add(jpPwrMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 40, 30));
+        jpPwrBargraphPanel.add(jpPwrMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 40, 30));
 
         jpPwrHighHigh.setBackground(new java.awt.Color(0, 0, 0));
         jpPwrHighHigh.setForeground(new java.awt.Color(255, 0, 0));
         jpPwrHighHigh.setMaximum(2000);
         jpPwrHighHigh.setMinimum(1500);
         jpPwrHighHigh.setBorderPainted(false);
-        jpPwrBargraphPanel.add(jpPwrHighHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 30, 30));
+        jpPwrBargraphPanel.add(jpPwrHighHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 30, 30));
 
-        mainPanel.add(jpPwrBargraphPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 11, 355, 30));
+        mainPanel.add(jpPwrBargraphPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 11, 370, 30));
 
         jpSWRPanel.setBackground(new java.awt.Color(0, 0, 0));
         jpSWRPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jl_SWR.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jl_SWR.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jl_SWR.setForeground(new java.awt.Color(255, 255, 255));
+        jl_SWR.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jl_SWR.setMaximumSize(new java.awt.Dimension(44, 22));
         jl_SWR.setMinimumSize(new java.awt.Dimension(44, 22));
         jl_SWR.setPreferredSize(new java.awt.Dimension(44, 22));
