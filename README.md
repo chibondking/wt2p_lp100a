@@ -15,7 +15,7 @@ Power Meter color schemes are indicated by the following:
  * Bright Red for 1500-2000 watts
 
 SWR Meter color schemes are indicated by the following:
-* Green: 1.0-1.49
+* Dark Blue: 1.0-1.49
 * Yellow: 1.50-1.99
 * Orange: 2.0 - 2.49
 * Red: 2.50 +
