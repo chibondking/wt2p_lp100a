@@ -359,7 +359,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlPwr100.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlPwr100.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr100.setText("100");
-        mainPanel.add(jlPwr100, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
+        mainPanel.add(jlPwr100, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
 
         jlPwr50.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlPwr50.setForeground(new java.awt.Color(204, 204, 0));
@@ -374,7 +374,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlPwr500.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlPwr500.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr500.setText("500");
-        mainPanel.add(jlPwr500, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+        mainPanel.add(jlPwr500, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, -1, -1));
 
         jlPwr1000.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlPwr1000.setForeground(new java.awt.Color(204, 204, 0));
@@ -384,7 +384,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlPwr2000.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlPwr2000.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr2000.setText("2k");
-        mainPanel.add(jlPwr2000, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, -1, -1));
+        mainPanel.add(jlPwr2000, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, -1, -1));
 
         jlSWR1.setForeground(new java.awt.Color(204, 204, 0));
         jlSWR1.setText("1");
@@ -413,7 +413,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlPwr1500.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlPwr1500.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr1500.setText("1.5k");
-        mainPanel.add(jlPwr1500, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 20, -1));
+        mainPanel.add(jlPwr1500, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 20, -1));
 
         jpRadioSelector.setBackground(new java.awt.Color(0, 0, 0));
 
