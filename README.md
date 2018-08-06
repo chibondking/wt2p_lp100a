@@ -40,7 +40,13 @@ Move this to your Windows desktop.
 
 ### On Linux/OSX:
 
-Start from the command line or create a link that passes in the correct parameters (com/serial port and latest firmware flag)
+Start from the command line or create a link that passes in the correct parameters (com/serial port and latest firmware flag).
+
+i.e. if you are using an usb-serial adapter:
+
+`java -jar WT2P-LP100A.jar /dev/ttyUSB1 <LATEST_LP_100_FIRMWARE>`
+
+You must use either sudo (not recommended) or give your serial/usb serial ports read-write access to your user.
 
 ### Running
 
