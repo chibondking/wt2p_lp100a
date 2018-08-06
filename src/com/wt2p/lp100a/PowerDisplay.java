@@ -529,7 +529,10 @@ public class PowerDisplay extends javax.swing.JFrame {
         });
 
         try {
-            Thread.sleep(150);
+            // Hackish way to prevent NPE's when you cannot connect to te LP-100A
+            // We sleep for 300ms to allow for all of the UI elements to be
+            // initialized before attempting to connect to the LP-100.
+            Thread.sleep(300);
             connectToComPort();
             startReadingFromComPort();
             updateStatusField("Connected to LP-100A");
