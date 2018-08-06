@@ -33,7 +33,7 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static void startReadingFromComPort() throws SerialComException, InterruptedException {
         while (true) {
-            Thread.sleep(50);
+            Thread.sleep(10);
             serialComManager.writeString(comPortHandle, "P", 2);
             Thread.sleep(50);
             String data = serialComManager.readString(comPortHandle);
@@ -406,7 +406,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlPwr1500.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlPwr1500.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr1500.setText("1.5k");
-        mainPanel.add(jlPwr1500, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 20, -1));
+        mainPanel.add(jlPwr1500, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 30, -1));
 
         jpRadioSelector.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -465,9 +465,11 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlNetworkActive.setText("Network Active");
         mainPanel.add(jlNetworkActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, 80, -1));
 
+        jlStatusField.setBackground(new java.awt.Color(0, 0, 0));
         jlStatusField.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlStatusField.setForeground(new java.awt.Color(153, 153, 153));
         jlStatusField.setMinimumSize(new java.awt.Dimension(230, 20));
+        jlStatusField.setOpaque(true);
         jlStatusField.setPreferredSize(new java.awt.Dimension(230, 20));
         mainPanel.add(jlStatusField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 210, 20));
 
@@ -532,9 +534,8 @@ public class PowerDisplay extends javax.swing.JFrame {
             startReadingFromComPort();
             updateStatusField("Connected to LP-100A");
         } catch (Exception ex) {
-            updateStatusField("Unable to connect to LP-100A!", true);
+            updateStatusField("Connection error to LP-100A! Restart.", true);
         }
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
