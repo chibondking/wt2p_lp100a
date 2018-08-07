@@ -519,21 +519,22 @@ public class PowerDisplay extends javax.swing.JFrame {
         }
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PowerDisplay pd = new PowerDisplay();
-                pd.jpRadioSelector.setVisible(isUsingLatestLPFirmware);
-                pd.jlNetworkActive.setVisible(isNetworkEnabled);
-                pd.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            PowerDisplay pd = new PowerDisplay();
+            pd.jpRadioSelector.setVisible(isUsingLatestLPFirmware);
+            pd.jlNetworkActive.setVisible(isNetworkEnabled);
+            pd.setVisible(true);
         });
 
         try {
-            Thread.sleep(150);
+            // Hackish way to prevent NPE's when you cannot connect to te LP-100A
+            // We sleep for 300ms to allow for all of the UI elements to be
+            // initialized before attempting to connect to the LP-100.
+            Thread.sleep(300);
             connectToComPort();
             startReadingFromComPort();
             updateStatusField("Connected to LP-100A");
-        } catch (Exception ex) {
+        } catch (IOException | InterruptedException ex) {
             updateStatusField("Connection error to LP-100A! Restart.", true);
         }
     }
