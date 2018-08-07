@@ -46,6 +46,8 @@ i.e. if you are using an usb-serial adapter:
 
 `java -jar WT2P-LP100A.jar /dev/ttyUSB1 <LATEST_LP_100_FIRMWARE>`
 
+You must use either sudo (not recommended) or give your serial/usb serial ports read-write access to your user.
+
 #### On OSX:
 
 There are a number of articles to identify the USB serial device that is plugged
@@ -54,8 +56,6 @@ in to your Mac and the LP-100A. This is what I used for testing on an OSX device
 `java -jar WT2P_LP100A.jar /dev/tty.usbserial-A504XGQ5 false`
 
 Change your device name to fit your configuration.
-
-You must use either sudo (not recommended) or give your serial/usb serial ports read-write access to your user.
 
 ### Running
 
