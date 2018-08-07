@@ -46,6 +46,15 @@ i.e. if you are using an usb-serial adapter:
 
 `java -jar WT2P-LP100A.jar /dev/ttyUSB1 <LATEST_LP_100_FIRMWARE>`
 
+#### On OSX:
+
+There are a number of articles to identify the USB serial device that is plugged
+in to your Mac and the LP-100A. This is what I used for testing on an OSX device:
+
+`java -jar WT2P_LP100A.jar /dev/tty.usbserial-A504XGQ5 false`
+
+Change your device name to fit your configuration.
+
 You must use either sudo (not recommended) or give your serial/usb serial ports read-write access to your user.
 
 ### Running
@@ -66,6 +75,10 @@ You should see the LP-100A software display on screen and the text "connected" a
 ## Known Issues
 
 * When switching modes via the LP-100A hardware interface, it will be necessary to restart the app.
+
+* OSX colors are not working properly. Marked for further investigation.
+
+![OSX Screenshot](img/osx_screenshot.png)
 
 ## Future Plans
 
