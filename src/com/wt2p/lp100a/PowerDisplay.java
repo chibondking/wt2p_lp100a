@@ -135,7 +135,19 @@ public class PowerDisplay extends javax.swing.JFrame {
     }
 
     private static void updateForwardPower(PowerDataDto dto) {
-        jlPowerText.setText(dto.getFormattedForwardPower());
+        
+        Double lastHighValue = 0;
+
+        if (dto.getForwardPower() > lastHighValue) {
+            lastHighValue = dto.getForwardPower();
+            jlPowerText.setText(dto.getFormattedForwardPower());
+        }
+
+        try {
+            Thread.sleep(300);
+        } catch (Exception ex ) {
+            //Intentially do nothing.
+        }
     }
 
     private static void updateSWRBargraph(PowerDataDto dto) {
