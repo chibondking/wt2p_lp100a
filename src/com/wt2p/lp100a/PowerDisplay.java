@@ -136,7 +136,7 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static void updateForwardPower(PowerDataDto dto) {
         
-        Double lastHighValue = 0;
+        Double lastHighValue = 0.00;
 
         if (dto.getForwardPower() > lastHighValue) {
             lastHighValue = dto.getForwardPower();
