@@ -19,7 +19,7 @@ public class PowerDataDto extends Object implements Serializable {
     private double peakHold;
     private double dBm;
     private double swrValue;
-    private DecimalFormat powerFormat = new DecimalFormat("#,##0.0");
+    private DecimalFormat powerFormat = new DecimalFormat("#,##0.00");
     
     public PowerDataDto(String[] dataArray, boolean latestLpFirmware) {
         this.isUsingLatestLPFirmware = latestLpFirmware;
