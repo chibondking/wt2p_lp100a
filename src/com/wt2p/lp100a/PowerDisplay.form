@@ -134,7 +134,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="99" green="33" red="0" type="rgb"/>
+                  <Color blue="0" green="ff" red="33" type="rgb"/>
                 </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="string" type="java.lang.String" value="0"/>
@@ -173,7 +173,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="99" green="33" red="0" type="rgb"/>
+                  <Color blue="0" green="ff" red="33" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="500"/>
                 <Property name="minimum" type="int" value="100"/>
@@ -194,7 +194,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="66" red="cc" type="rgb"/>
+                  <Color blue="0" green="66" red="ff" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="1500"/>
                 <Property name="minimum" type="int" value="1000"/>
@@ -215,7 +215,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="99" red="99" type="rgb"/>
+                  <Color blue="0" green="66" red="ff" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="1000"/>
                 <Property name="minimum" type="int" value="500"/>
@@ -303,7 +303,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="99" green="33" red="0" type="rgb"/>
+                  <Color blue="0" green="ff" red="33" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="150"/>
                 <Property name="minimum" type="int" value="100"/>
@@ -325,7 +325,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="99" red="99" type="rgb"/>
+                  <Color blue="0" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="200"/>
                 <Property name="minimum" type="int" value="150"/>
@@ -346,7 +346,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="66" red="cc" type="rgb"/>
+                  <Color blue="0" green="66" red="ff" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="250"/>
                 <Property name="minimum" type="int" value="200"/>
