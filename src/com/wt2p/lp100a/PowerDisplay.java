@@ -107,21 +107,21 @@ public class PowerDisplay extends javax.swing.JFrame {
             jpPwrLowMid.setValue(0);
         }
 
-        if (dto.getForwardPower() > 500) {
+        if (dto.getForwardPower() >= 500) {
             jpPwrMid.setValue(dto.getForwardPower().intValue());
         } else if (dto.getForwardPower() < 500) {
             jpPwrMid.setValue(0);
         }
 
-        if (dto.getForwardPower() > 1000 && dto.getForwardPower() <= 1500) {
+        if (dto.getForwardPower() >= 1000 && dto.getForwardPower() <= 1500) {
             jpPwrHigh.setValue(dto.getForwardPower().intValue());
-        } else if (dto.getForwardPower() < 1000) {
+        } else if (dto.getForwardPower() <= 1000) {
             jpPwrHigh.setValue(0);
         }
 
-        if (dto.getForwardPower() > 1500 && dto.getForwardPower() <= 2000) {
+        if (dto.getForwardPower() >= 1500 && dto.getForwardPower() <= 2000) {
             jpPwrHighHigh.setValue(dto.getForwardPower().intValue());
-        } else if (dto.getForwardPower() < 1500) {
+        } else if (dto.getForwardPower() <= 1500) {
             jpPwrHighHigh.setValue(0);
         }
 
