@@ -237,6 +237,7 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("WT2P LP-100A Utility");
+        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(0, 0, 0));
         setLocationByPlatform(true);
         setResizable(false);
@@ -475,9 +476,17 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 170));
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
+        menuBar.setBackground(new java.awt.Color(0, 0, 0));
+        menuBar.setForeground(new java.awt.Color(102, 102, 102));
+        menuBar.setBorderPainted(false);
+        menuBar.setOpaque(false);
 
+        fileMenu.setBackground(new java.awt.Color(0, 0, 0));
+        fileMenu.setMnemonic('f');
+        fileMenu.setText("Menu");
+
+        exitMenuItem.setBackground(new java.awt.Color(0, 0, 0));
+        exitMenuItem.setForeground(new java.awt.Color(255, 255, 51));
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
