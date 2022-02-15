@@ -153,7 +153,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="ff" red="33" type="rgb"/>
+                  <Color blue="0" green="66" red="0" type="rgb"/>
                 </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="string" type="java.lang.String" value="0"/>
@@ -192,7 +192,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="ff" red="33" type="rgb"/>
+                  <Color blue="0" green="66" red="0" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="500"/>
                 <Property name="minimum" type="int" value="100"/>
@@ -213,7 +213,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="66" red="ff" type="rgb"/>
+                  <Color blue="0" green="66" red="cc" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="1500"/>
                 <Property name="minimum" type="int" value="1000"/>
@@ -234,7 +234,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="66" red="ff" type="rgb"/>
+                  <Color blue="0" green="66" red="cc" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="1000"/>
                 <Property name="minimum" type="int" value="500"/>
@@ -316,13 +316,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JProgressBar" name="jpSWRGreen">
+            <Component class="javax.swing.JProgressBar" name="jpSWRLow">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="ff" red="33" type="rgb"/>
+                  <Color blue="0" green="66" red="0" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="150"/>
                 <Property name="minimum" type="int" value="100"/>
@@ -338,13 +338,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JProgressBar" name="jpSWRYellow">
+            <Component class="javax.swing.JProgressBar" name="jpSWRMedium">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="ff" red="ff" type="rgb"/>
+                  <Color blue="0" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="200"/>
                 <Property name="minimum" type="int" value="150"/>
@@ -359,13 +359,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JProgressBar" name="jpSWROrange">
+            <Component class="javax.swing.JProgressBar" name="jpSWRWarning">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="66" red="ff" type="rgb"/>
+                  <Color blue="0" green="66" red="cc" type="rgb"/>
                 </Property>
                 <Property name="maximum" type="int" value="250"/>
                 <Property name="minimum" type="int" value="200"/>
@@ -380,7 +380,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JProgressBar" name="jpSWRRed">
+            <Component class="javax.swing.JProgressBar" name="jpSWRHigh">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
