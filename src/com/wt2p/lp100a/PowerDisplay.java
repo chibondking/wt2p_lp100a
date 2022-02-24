@@ -34,7 +34,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         while (true) {
             Thread.sleep(10);
             serialComManager.writeString(comPortHandle, "P", 2);
-            Thread.sleep(10);
+            Thread.sleep(30);
             String data = serialComManager.readString(comPortHandle);
             parseStringFromLP100A(data);
 
@@ -71,7 +71,8 @@ public class PowerDisplay extends javax.swing.JFrame {
         updateForwardPowerBargraph(dto);
         updateSWRBargraph(dto);
         updateSWR(dto);
-        updateStatusField("Connected", false); 
+        updateStatusField("Connected", false);
+        jl_ConnectedIcon.setVisible(true);
     }
 
     private static void updateForwardPowerBargraph(PowerDataDto dto) {
@@ -210,6 +211,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlSWRAlarm = new javax.swing.JLabel();
         jlPwr1500 = new javax.swing.JLabel();
         jlStatusField = new javax.swing.JLabel();
+        jl_ConnectedIcon = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -416,9 +418,15 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlStatusField.setMinimumSize(new java.awt.Dimension(230, 20));
         jlStatusField.setOpaque(true);
         jlStatusField.setPreferredSize(new java.awt.Dimension(230, 20));
-        mainPanel.add(jlStatusField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 210, 20));
+        mainPanel.add(jlStatusField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 210, 20));
 
-        getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 170));
+        jl_ConnectedIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/wt2p/lp100a/icons/launch_white.png"))); // NOI18N
+        jl_ConnectedIcon.setFocusable(false);
+        jl_ConnectedIcon.setRequestFocusEnabled(false);
+        jl_ConnectedIcon.setVerifyInputWhenFocusTarget(false);
+        mainPanel.add(jl_ConnectedIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+
+        getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 150));
 
         menuBar.setBackground(new java.awt.Color(0, 0, 0));
         menuBar.setForeground(new java.awt.Color(102, 102, 102));
@@ -426,8 +434,8 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         fileMenu.setBackground(new java.awt.Color(0, 0, 0));
         fileMenu.setForeground(new java.awt.Color(102, 102, 102));
+        fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/wt2p/lp100a/icons/switch_profile_white.png"))); // NOI18N
         fileMenu.setMnemonic('f');
-        fileMenu.setText("Menu");
 
         exitMenuItem.setBackground(new java.awt.Color(0, 0, 0));
         exitMenuItem.setForeground(new java.awt.Color(255, 255, 51));
@@ -480,6 +488,7 @@ public class PowerDisplay extends javax.swing.JFrame {
             updateStatusField("Connected", false);
         } catch (IOException | InterruptedException ex) {
             updateStatusField("Connection error to LP-100A! Restart.", true);
+            jl_ConnectedIcon.setVisible(false);
         }
     }
 
@@ -503,6 +512,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     private javax.swing.JLabel jlSWR30;
     private static javax.swing.JLabel jlSWRAlarm;
     private static javax.swing.JLabel jlStatusField;
+    private static javax.swing.JLabel jl_ConnectedIcon;
     private javax.swing.JLabel jl_Power;
     public static javax.swing.JLabel jl_SWR;
     private javax.swing.JPanel jpPwrBargraphPanel;
