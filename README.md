@@ -1,28 +1,57 @@
 # LP100A OSD (On-Screen Display) Serial Interface
+## Updated February 2022 - wt2p@cedrick.io
 
-![](img/meter_mid_power.png)
+![](img/meter_high_power.png)
 
-This is a Java application that allows for people to connect to a [LP-100A](http://www.telepostinc.com/lp100.html) device and display on screen forward Power and SWR as seen on the actual LP-100A wattmeter. The utility supports single coupler and dual coupler features (dual coupler sampling is detected automatically).
+This is a Java application that allows for people to connect to a [LP-100A](http://www.telepostinc.com/lp100.html) 
+device and display on screen forward Power and SWR as seen on the actual LP-100A wattmeter. 
+The utility supports single coupler and dual coupler features (dual coupler sampling
+is detected automatically within the LP-100 - if module is installed).
 
-If you're using the latest firmware **(TBD)** for the LP-100A, the program will tell you which coupler (Radio 1 or Radio 2) is currently transmitting.
+### Notable Fixes (January 2022)
 
+* Bargraphs are now "uniform": No visible breaks between segments.
+![Old Metering](img/meter_mid_power_old.png)
+* Updated colorscheme: Colors are more appealing (to me, feedback always welcome) for extended 
+operating sessions and the contrast allows for immediate identification of power and SWR levels.
+* Smaller Size: 450 x 201 pixels makes it easy to tuck away on a busy operating screen
+* Always On Top: With the smaller size, the utility window is now always on top of other
+applications. This ensures that you have constant visibility into what is happening.
+* Updated High SWR notice: Icon added for High SWR along with "SWR" text in red
+anytime the SWR is above 3.0:1
+* Connection Status: If there's an error connecting to the LP-100, it is now shown 
+in the text area at the bottom of the utility. If there is a connection and the utility
+is reading data from the LP-100, a small "rocket" icon appears in the lower left
+and the connection status text displays "Connected" in green.
+* Other minor cosmetic changes and behind the scenes updates. Removed stuff that will not be 
+used. Will consider adding new stuff later. See the roadmap below.
+
+![Connected](img/meter_new_connected.png)
+ 
 ## Colors
 
 Power Meter color schemes are indicated by the following:
- * Dark Blue for Low Power (0-500 watts)
- * Dark Yellow for Medium Power (500-1000 watts)
- * Dark Orange for High Power (1000-1500 watts)
- * Bright Red for 1500-2000 watts
+ * Blue: Low Power (0-500 watts)
+ * Orange: Medium/High Power (500-1500 watts)
+ * Bright Red: "Oops Power" (1500-2000 watts)
 
 SWR Meter color schemes are indicated by the following:
-* Dark Blue: 1.0-1.49
+* Blue: 1.0-1.49
 * Yellow: 1.50-1.99
 * Orange: 2.0 - 2.49
 * Red: 2.50 +
 
-If the SWR is above 3.0, an additional bright red alert text will display to the right of the SWR bargraph.
+If the SWR is above 3.0, an additional alert icon and text displays to the right of the SWR Bargraph.
 
 ![High SWR](img/meter_hi_swr.png)
+
+
+![Low Power](img/meter_low_power.png)
+
+## Prerequisites:
+
+To run, you need the latest Java Runtime Environment installed. You can obtain this
+from the [Oracle Java Website](https://java.com)
 
 ## Downloading and Installing
 
@@ -40,11 +69,11 @@ Move this to your Windows desktop.
 
 ### On Linux/OSX:
 
-Start from the command line or create a link that passes in the correct parameters (com/serial port and latest firmware flag).
+Start from the command line or create a link that passes in the correct parameter (com/serial port).
 
 i.e. if you are using an usb-serial adapter:
 
-`java -jar WT2P-LP100A.jar /dev/ttyUSB1 <LATEST_LP_100_FIRMWARE>`
+`java -jar WT2P-LP100A.jar /dev/ttyUSB1`
 
 You must use either sudo (not recommended) or give your serial/usb serial ports read-write access to your user.
 
@@ -61,16 +90,15 @@ Change your device name to fit your configuration.
 
 You can manually run this via the command line:
 
-`java -jar WT2P-LP100A.jar <COM_PORT> <LATEST_LP_100_FIRMWARE>`
+`java -jar WT2P-LP100A.jar <COM_PORT>`
 
 Where:
 `COM_PORT` is the Com Port your LP-100A is running on (i.e. COM9 on Windows, /dev/ttyS0 on *NIX variants)
 
-`LATEST_LP_100_FIRMWARE`  is set to true if you're running the latest LP-100A firmware (July/August 2018). You're probably not (yet), so this should be set to false.
+`java -jar WT2P-LP100A.jar COM9`
 
-`java -jar WT2P-LP100A.jar COM9 false`
-
-You should see the LP-100A software display on screen and the text "connected" appears in the lower left corner of the screen. Apply RF from your radio and the application will display Power and SWR measurements from the LP-100A.
+You should see the LP-100A software display on screen and the text "Connected" appears in the lower corner of the utility. 
+Apply RF from your radio and the application will display Power and SWR measurements from the LP-100A.
 
 ## Known Issues
 
@@ -83,9 +111,8 @@ You should see the LP-100A software display on screen and the text "connected" a
 ## Future Plans
 
 * Remote networking (client/server) support
-* Dual Coupler Support: Identify which coupler has active RF
-* Customize Power bar colors
-* Customize SWR bar colors
+* Dual Coupler Support: Identify which coupler has active RF (Abandoned in 2022, no firmware support)
+* As time permits, investigate using a config file to further customize items in the app. Send suggestions.
 
 ## License
 GPL v.3
