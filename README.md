@@ -14,7 +14,7 @@ is detected automatically within the LP-100 - if module is installed).
 ![Old Metering](img/meter_mid_power_old.png)
 * Updated colorscheme: Colors are more appealing (to me, feedback always welcome) for extended 
 operating sessions and the contrast allows for immediate identification of power and SWR levels.
-* Smaller Size: 450 x 205 pixels makes it easy to tuck away on a busy operating screen
+* Smaller Size: 450 x 201 pixels makes it easy to tuck away on a busy operating screen
 * Always On Top: With the smaller size, the utility window is now always on top of other
 applications. This ensures that you have constant visibility into what is happening.
 * Updated High SWR notice: Icon added for High SWR along with "SWR" text in red
