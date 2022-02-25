@@ -403,9 +403,11 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlSWR30.setText("3.0");
         mainPanel.add(jlSWR30, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, -1, -1));
 
-        jlSWRAlarm.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jlSWRAlarm.setText("HI SWR");
-        mainPanel.add(jlSWRAlarm, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
+        jlSWRAlarm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jlSWRAlarm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlSWRAlarm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/wt2p/lp100a/icons/cancel_icon_small.png"))); // NOI18N
+        jlSWRAlarm.setText("SWR");
+        mainPanel.add(jlSWRAlarm, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 90, 40));
 
         jlPwr1500.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlPwr1500.setForeground(new java.awt.Color(204, 204, 0));
