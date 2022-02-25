@@ -243,19 +243,19 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpPwrBargraphPanel.setBackground(new java.awt.Color(0, 0, 0));
         jpPwrBargraphPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jpPwrLow.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwrLow.setBackground(new java.awt.Color(0, 47, 63));
         jpPwrLow.setForeground(new java.awt.Color(21, 166, 215));
         jpPwrLow.setBorder(null);
         jpPwrLow.setBorderPainted(false);
         jpPwrLow.setString("0");
-        jpPwrBargraphPanel.add(jpPwrLow, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 110, 30));
+        jpPwrBargraphPanel.add(jpPwrLow, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 0, 115, 30));
 
         jlPowerText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jlPowerText.setForeground(new java.awt.Color(255, 255, 255));
         jlPowerText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jpPwrBargraphPanel.add(jlPowerText, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 30));
 
-        jpPwrLowMid.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwrLowMid.setBackground(new java.awt.Color(0, 47, 63));
         jpPwrLowMid.setForeground(new java.awt.Color(21, 166, 215));
         jpPwrLowMid.setMaximum(500);
         jpPwrLowMid.setMinimum(100);
@@ -264,7 +264,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpPwrLowMid.setBorderPainted(false);
         jpPwrBargraphPanel.add(jpPwrLowMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 90, 30));
 
-        jpPwrHigh.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwrHigh.setBackground(new java.awt.Color(42, 17, 0));
         jpPwrHigh.setForeground(new java.awt.Color(249, 136, 60));
         jpPwrHigh.setMaximum(1500);
         jpPwrHigh.setMinimum(1000);
@@ -273,7 +273,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpPwrHigh.setBorderPainted(false);
         jpPwrBargraphPanel.add(jpPwrHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 30, 30));
 
-        jpPwrMid.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwrMid.setBackground(new java.awt.Color(42, 17, 0));
         jpPwrMid.setForeground(new java.awt.Color(249, 136, 60));
         jpPwrMid.setMaximum(1000);
         jpPwrMid.setMinimum(500);
@@ -282,7 +282,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpPwrMid.setBorderPainted(false);
         jpPwrBargraphPanel.add(jpPwrMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 40, 30));
 
-        jpPwrHighHigh.setBackground(new java.awt.Color(0, 0, 0));
+        jpPwrHighHigh.setBackground(new java.awt.Color(49, 0, 0));
         jpPwrHighHigh.setForeground(new java.awt.Color(255, 0, 0));
         jpPwrHighHigh.setMaximum(2000);
         jpPwrHighHigh.setMinimum(1500);
@@ -304,7 +304,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jl_SWR.setPreferredSize(new java.awt.Dimension(44, 22));
         jpSWRPanel.add(jl_SWR, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 30));
 
-        jpSWRLow.setBackground(new java.awt.Color(0, 0, 0));
+        jpSWRLow.setBackground(new java.awt.Color(0, 47, 63));
         jpSWRLow.setForeground(new java.awt.Color(21, 166, 215));
         jpSWRLow.setMaximum(150);
         jpSWRLow.setMinimum(100);
@@ -323,7 +323,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpSWRMedium.setBorderPainted(false);
         jpSWRPanel.add(jpSWRMedium, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 50, 30));
 
-        jpSWRWarning.setBackground(new java.awt.Color(0, 0, 0));
+        jpSWRWarning.setBackground(new java.awt.Color(42, 17, 0));
         jpSWRWarning.setForeground(new java.awt.Color(204, 102, 0));
         jpSWRWarning.setMaximum(250);
         jpSWRWarning.setMinimum(200);
@@ -332,7 +332,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpSWRWarning.setBorderPainted(false);
         jpSWRPanel.add(jpSWRWarning, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 50, 30));
 
-        jpSWRHigh.setBackground(new java.awt.Color(0, 0, 0));
+        jpSWRHigh.setBackground(new java.awt.Color(49, 0, 0));
         jpSWRHigh.setForeground(new java.awt.Color(255, 0, 0));
         jpSWRHigh.setMaximum(300);
         jpSWRHigh.setMinimum(250);
