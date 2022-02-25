@@ -343,42 +343,42 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         mainPanel.add(jpSWRPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 65, -1, 34));
 
-        jlPwr0.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr0.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlPwr0.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr0.setText("0");
         mainPanel.add(jlPwr0, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 14, -1));
 
-        jlPwr100.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr100.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlPwr100.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr100.setText("100");
         mainPanel.add(jlPwr100, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, -1, -1));
 
-        jlPwr50.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr50.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlPwr50.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr50.setText("50");
         mainPanel.add(jlPwr50, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
 
-        jlPwr300.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr300.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlPwr300.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr300.setText("300");
         mainPanel.add(jlPwr300, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, -1, -1));
 
-        jlPwr500.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr500.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlPwr500.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr500.setText("500");
         mainPanel.add(jlPwr500, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
 
-        jlPwr1000.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr1000.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlPwr1000.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr1000.setText("1k");
         mainPanel.add(jlPwr1000, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
 
-        jlPwr2000.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr2000.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlPwr2000.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr2000.setText("2k");
         mainPanel.add(jlPwr2000, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, -1));
 
-        jlSWR1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jlSWR1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlSWR1.setForeground(new java.awt.Color(204, 204, 0));
         jlSWR1.setText("1");
         mainPanel.add(jlSWR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, -1));
@@ -409,7 +409,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlSWRAlarm.setText("SWR");
         mainPanel.add(jlSWRAlarm, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 90, 40));
 
-        jlPwr1500.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlPwr1500.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlPwr1500.setForeground(new java.awt.Color(204, 204, 0));
         jlPwr1500.setText("1.5k");
         mainPanel.add(jlPwr1500, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 30, -1));
