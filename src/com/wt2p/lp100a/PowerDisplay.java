@@ -314,7 +314,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpSWRLow.setOpaque(true);
         jpSWRPanel.add(jpSWRLow, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 70, 30));
 
-        jpSWRMedium.setBackground(new java.awt.Color(0, 0, 0));
+        jpSWRMedium.setBackground(new java.awt.Color(60, 47, 0));
         jpSWRMedium.setForeground(new java.awt.Color(204, 204, 0));
         jpSWRMedium.setMaximum(200);
         jpSWRMedium.setMinimum(150);
@@ -383,22 +383,22 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlSWR1.setText("1");
         mainPanel.add(jlSWR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, -1));
 
-        jlSWR15.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jlSWR15.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlSWR15.setForeground(new java.awt.Color(204, 204, 0));
         jlSWR15.setText("1.5");
         mainPanel.add(jlSWR15, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
 
-        jlSWR20.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jlSWR20.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlSWR20.setForeground(new java.awt.Color(204, 204, 0));
         jlSWR20.setText("2.0");
         mainPanel.add(jlSWR20, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, -1, -1));
 
-        jlSWR25.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jlSWR25.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlSWR25.setForeground(new java.awt.Color(204, 204, 0));
         jlSWR25.setText("2.5");
         mainPanel.add(jlSWR25, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, -1, -1));
 
-        jlSWR30.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jlSWR30.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jlSWR30.setForeground(new java.awt.Color(204, 204, 0));
         jlSWR30.setText("3.0");
         mainPanel.add(jlSWR30, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, -1, -1));
