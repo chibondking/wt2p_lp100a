@@ -144,10 +144,8 @@ public class PowerDisplay extends javax.swing.JFrame {
         if (dto.getForwardPower() > 1500 && dto.getForwardPower() <= 2000) {
             jpPwrHighHigh.setValue(dto.getForwardPower().intValue());
             jpPwrHigh.setValue(dto.getForwardPower().intValue());
-            jlPowerText.setForeground(Color.RED);
         } else if (dto.getForwardPower() <= 1500) {
             jpPwrHighHigh.setValue(0);
-            jlPowerText.setForeground(Color.WHITE);
         }
 
         if (dto.getForwardPower() == 0) {
@@ -182,7 +180,6 @@ public class PowerDisplay extends javax.swing.JFrame {
         }
 
         if (dto.getSWR() > 3.0) {
-            jlSWRAlarm.setForeground(Color.RED);
             jlSWRAlarm.setVisible(true);
         }
 
