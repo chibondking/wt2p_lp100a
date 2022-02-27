@@ -517,8 +517,12 @@ public class PowerDisplay extends javax.swing.JFrame {
         if (args.length > 0) {
             comPort = "COM" + args[0];
             isUsingNetwork = Boolean.parseBoolean(args[1]);
-            networkIPAddress = args[2];
-            networkPort = Integer.parseInt(args[3]);
+
+            if (isUsingNetwork) {
+                networkIPAddress = args[2];
+                networkPort = Integer.parseInt(args[3]);
+            }
+        
         } else {
             comPort = "COM1";
             isUsingNetwork = false;
