@@ -3,7 +3,13 @@ package com.wt2p.lp100a;
 import com.serialpundit.core.SerialComException;
 import com.serialpundit.serial.SerialComManager;
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 /**
  *
@@ -15,6 +21,15 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static long comPortHandle;
     private static String comPort;
     private static boolean isUsingLatestLPFirmware;
+    private static boolean isUsingNetwork = false;
+    private static String networkIPAddress;
+    private static int networkPort;
+    private static Socket networkSocket;
+    private static InputStream inputStream;
+    private static BufferedReader bufferedReader;
+    private static OutputStream outputStream;
+    private static PrintWriter printWriter;
+
 
     /**
      * Creates new form PowerDisplay
@@ -40,6 +55,33 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         }
     }
+
+    private static void connectToNetworkServer() throws IOException {
+        // Connect to the LP-100A server component
+        networkSocket = new Socket(networkIPAddress, networkPort);
+        inputStream = networkSocket.getInputStream();
+        outputStream = networkSocket.getOutputStream();
+        printWriter = new PrintWriter(outputStream, true);
+    }
+
+    private static void startReadingFromNetworkStream() throws IOException {
+        while(true) {
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String data = bufferedReader.readLine();
+            parseStringFromLP100A(data);
+            sendServerMeaage("OK");
+        }
+    }
+
+    private static void sendServerMeaage(String message) {
+
+        printWriter.println(message);
+    }
+
+    private static void disconnectFromNetworkServer() throws IOException {
+        sendServerMeaage("BYE");
+    }
+
 
     private static void updateStatusField(String value, boolean errorCondition) {
         
@@ -137,12 +179,11 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         if (dto.getSWR() >= 2.50) {
             jpSWRHigh.setValue(dto.getSWRInteger());
-            jl_SWR.setForeground(new java.awt.Color(204, 102, 0));
         }
 
         if (dto.getSWR() > 3.0) {
             jlSWRAlarm.setForeground(Color.RED);
-            jl_SWR.setForeground(Color.RED);
+            jlSWRAlarm.setVisible(true);
         }
 
         try {
@@ -157,7 +198,7 @@ public class PowerDisplay extends javax.swing.JFrame {
             jpSWRMedium.setValue(0);
             jpSWRWarning.setValue(0);
             jpSWRHigh.setValue(0);
-            jlSWRAlarm.setForeground(Color.BLACK);
+            jlSWRAlarm.setVisible(false);
         }
     }
 
@@ -212,6 +253,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlPwr1500 = new javax.swing.JLabel();
         jlStatusField = new javax.swing.JLabel();
         jl_ConnectedIcon = new javax.swing.JLabel();
+        jl_NetworkConnected = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -426,7 +468,13 @@ public class PowerDisplay extends javax.swing.JFrame {
         jl_ConnectedIcon.setFocusable(false);
         jl_ConnectedIcon.setRequestFocusEnabled(false);
         jl_ConnectedIcon.setVerifyInputWhenFocusTarget(false);
-        mainPanel.add(jl_ConnectedIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+        mainPanel.add(jl_ConnectedIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+
+        jl_NetworkConnected.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jl_NetworkConnected.setForeground(new java.awt.Color(51, 153, 0));
+        jl_NetworkConnected.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/wt2p/lp100a/icons/network_icon.png"))); // NOI18N
+        jl_NetworkConnected.setText("Network");
+        mainPanel.add(jl_NetworkConnected, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 150));
 
@@ -460,6 +508,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         try {
             serialComManager.closeComPort(comPortHandle);
+            disconnectFromNetworkServer();
         } catch (Exception ex) {
             // Do nothing
         }
@@ -469,9 +518,13 @@ public class PowerDisplay extends javax.swing.JFrame {
     public static void main(String args[]) {
         //TODO: Use a argument parser here to make things simpler
         if (args.length > 0) {
-            comPort = args[0];
+            comPort = "COM" + args[0];
+            isUsingNetwork = Boolean.parseBoolean(args[1]);
+            networkIPAddress = args[2];
+            networkPort = Integer.parseInt(args[3]);
         } else {
             comPort = "COM1";
+            isUsingNetwork = false;
         }
 
         /* Create and display the form */
@@ -485,12 +538,23 @@ public class PowerDisplay extends javax.swing.JFrame {
             // We sleep for 300ms to allow for all of the UI elements to be
             // initialized before attempting to connect to the LP-100.
             Thread.sleep(400);
+
+        if (isUsingNetwork) {
+            connectToNetworkServer();
+            startReadingFromNetworkStream();
+            updateStatusField("Connected - Network", false);
+            jl_NetworkConnected.setVisible(true);
+        } else {
             connectToComPort();
             startReadingFromComPort();
-            updateStatusField("Connected", false);
+            updateStatusField("Connected - Local", false);
+            jl_NetworkConnected.setVisible(false);
+        }
+        
         } catch (IOException | InterruptedException ex) {
             updateStatusField("Connection error to LP-100A! Restart.", true);
             jl_ConnectedIcon.setVisible(false);
+            jl_NetworkConnected.setVisible(false);
         }
     }
 
@@ -515,6 +579,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static javax.swing.JLabel jlSWRAlarm;
     private static javax.swing.JLabel jlStatusField;
     private static javax.swing.JLabel jl_ConnectedIcon;
+    private static javax.swing.JLabel jl_NetworkConnected;
     private javax.swing.JLabel jl_Power;
     public static javax.swing.JLabel jl_SWR;
     private javax.swing.JPanel jpPwrBargraphPanel;
