@@ -123,8 +123,9 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static void updateSWRBargraph(PowerDataDto dto) {
 
-        if (dto.getSWR() >= 1.01) {
+        if (dto.getSWR() == 1.00) {
             jpSWRLow.setValue(dto.getSWRInteger());
+            jlSWRAlarm.setVisible(false);
         }
 
         if (dto.getSWR() >= 1.50) {
@@ -141,8 +142,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         }
 
         if (dto.getSWR() > 3.0) {
-            jlSWRAlarm.setForeground(Color.RED);
-            jl_SWR.setForeground(Color.RED);
+            jlSWRAlarm.setVisible(true);
         }
 
         try {
