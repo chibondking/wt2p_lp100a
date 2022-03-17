@@ -56,9 +56,9 @@ public class PowerDisplay extends javax.swing.JFrame {
     }
 
     private static void parseStringFromLP100A(String data) {
-        String[] dataArray = data.substring(1).split(",");
-
+        
         try {
+            String[] dataArray = data.substring(1).split(",");
             PowerDataDto powerDto = new PowerDataDto(dataArray, isUsingLatestLPFirmware);
             updateUserInterface(powerDto);
         } catch (Exception ex) {
