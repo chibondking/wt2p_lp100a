@@ -1,5 +1,5 @@
 # LP100A OSD (On-Screen Display) Serial Interface
-## Updated February 2022 - wt2p@cedrick.io
+## wt2p@cedrick.io
 
 ![](img/meter_high_power.png)
 
