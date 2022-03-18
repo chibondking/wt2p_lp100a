@@ -25,3 +25,4 @@ nbproject/private/private.properties
 .DS_Store
 /dist/
 /build/
+nbproject/private/private.xml

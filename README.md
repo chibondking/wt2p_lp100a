@@ -3,10 +3,21 @@
 
 ![](img/meter_high_power.png)
 
+![Menu](img/meter_menu_items)
+
 This is a Java application that allows for people to connect to a [LP-100A](http://www.telepostinc.com/lp100.html) 
 device and display on screen forward Power and SWR as seen on the actual LP-100A wattmeter. 
 The utility supports single coupler and dual coupler features (dual coupler sampling
 is detected automatically within the LP-100 - if module is installed).
+
+### Notable Fixes (March 2022)
+
+* Added menu item to select between Power/SWR and dBm/dBRL panes
+* Added new pane to show dBm bargraph (with transmitted watts overlay) and
+dBRL return loss number.
+* Display callsign programmed into the LP-100A meter in the lower right corner.
+
+![dBm/dBRL Pane](img/meter_db_panel)
 
 ### Notable Fixes (January 2022)
 

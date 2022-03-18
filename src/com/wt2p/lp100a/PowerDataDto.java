@@ -15,14 +15,13 @@ public class PowerDataDto extends Object implements Serializable {
     private double alarmSetPoint;
     private String callsign;
     private int transmittingRadio;
-    private boolean isUsingLatestLPFirmware;
     private double peakHold;
     private double dBm;
     private double swrValue;
     private DecimalFormat powerFormat = new DecimalFormat("#,##0.00");
+    private DecimalFormat dbRLFormat = new DecimalFormat("00.00");
     
-    public PowerDataDto(String[] dataArray, boolean latestLpFirmware) {
-        this.isUsingLatestLPFirmware = latestLpFirmware;
+    public PowerDataDto(String[] dataArray) {
         this.parseDataArray(dataArray);
     }
     
@@ -35,10 +34,6 @@ public class PowerDataDto extends Object implements Serializable {
         this.setPeakHold(convertValueToDouble(dataArray[6]));
         this.setdBm(convertValueToDouble(dataArray[7]));
         this.setSWR(convertValueToDouble(dataArray[8]));
-        
-        if (isUsingLatestLPFirmware) {
-            this.setTransmittingRadio(Integer.parseInt(dataArray[9]));
-        }
     }
     
     private double convertValueToDouble(String value) {
@@ -80,11 +75,7 @@ public class PowerDataDto extends Object implements Serializable {
     public String getCallsign() {
         return this.callsign;
     }
-    
-    private void setTransmittingRadio(int value) {
-        this.transmittingRadio = value; 
-    }
-    
+   
     public int getTransmittingRadio() {
         return this.transmittingRadio;
     }
@@ -100,6 +91,27 @@ public class PowerDataDto extends Object implements Serializable {
     public Double get_dBm() {
         return this.dBm;
     }
+
+    private Double convertSWRTodBRL(double value) {
+        if (value == 1) {
+         return 0.00;
+        } else {
+            return -20 * Math.log10((value - 1)/(value + 1));
+        }
+    }
+
+    public Double get_dBRL() {
+        return this.convertSWRTodBRL(this.getSWR());
+    }   
+
+    public String getFormatted_dbRL() {
+        return dbRLFormat.format(this.get_dBRL());
+    }
+
+    public int get_dbRL_Integer() {
+        return this.get_dBRL().intValue();
+    }
+
     
     private void setSWR(double value) { this.swrValue = value; }
     
