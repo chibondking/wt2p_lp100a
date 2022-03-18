@@ -174,6 +174,8 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static void update_dbmPower(PowerDataDto dto) {
         jl_dBm_Text.setText(dto.get_dBm().toString());
+        jp_dBm_LowMid.setString(dto.getFormattedForwardPower() + " watts");
+        jp_dBm_LowMid.setStringPainted(true);
     }
 
     private static void update_dBRLText(PowerDataDto dto) {
