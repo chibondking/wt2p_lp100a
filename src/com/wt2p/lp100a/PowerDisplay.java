@@ -188,7 +188,7 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static void updateSWRBargraph(PowerDataDto dto) {
 
-        if (dto.getSWR() == 1.00) {
+        if (dto.getSWR() >= 1.00) {
             jpSWRLow.setValue(dto.getSWRInteger());
             jlSWRAlarm.setVisible(false);
         }
