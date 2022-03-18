@@ -3,7 +3,7 @@
 
 ![](img/meter_high_power.png)
 
-![Menu](img/meter_menu_items)
+![Menu](img/meter_menu_items.png)
 
 This is a Java application that allows for people to connect to a [LP-100A](http://www.telepostinc.com/lp100.html) 
 device and display on screen forward Power and SWR as seen on the actual LP-100A wattmeter. 
@@ -17,7 +17,7 @@ is detected automatically within the LP-100 - if module is installed).
 dBRL return loss number.
 * Display callsign programmed into the LP-100A meter in the lower right corner.
 
-![dBm/dBRL Pane](img/meter_db_panel)
+![dBm/dBRL Pane](img/meter_db_panel.png)
 
 ### Notable Fixes (January 2022)
 
