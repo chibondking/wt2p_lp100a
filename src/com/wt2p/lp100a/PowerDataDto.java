@@ -19,6 +19,7 @@ public class PowerDataDto extends Object implements Serializable {
     private double dBm;
     private double swrValue;
     private DecimalFormat powerFormat = new DecimalFormat("#,##0.00");
+    private DecimalFormat dbRLFormat = new DecimalFormat("00.00");
     
     public PowerDataDto(String[] dataArray) {
         this.parseDataArray(dataArray);
@@ -91,10 +92,24 @@ public class PowerDataDto extends Object implements Serializable {
         return this.dBm;
     }
 
-    public Double convertSWRTodBRL(double value) {
+    private Double convertSWRTodBRL(double value) {
+        if (value == 1) {
+         return 0.00;
+        } else {
+            return -20 * Math.log10((value - 1)/(value + 1));
+        }
+    }
 
-         
-        return null;
+    public Double get_dBRL() {
+        return this.convertSWRTodBRL(this.getSWR());
+    }   
+
+    public String getFormatted_dbRL() {
+        return dbRLFormat.format(this.get_dBRL());
+    }
+
+    public int get_dbRL_Integer() {
+        return this.get_dBRL().intValue();
     }
 
     
