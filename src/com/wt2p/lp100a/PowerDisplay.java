@@ -14,6 +14,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static SerialComManager serialComManager;
     private static long comPortHandle;
     private static String comPort;
+    private static boolean isIndBmMode = false;
 
     /**
      * Creates new form PowerDisplay
@@ -70,8 +71,12 @@ public class PowerDisplay extends javax.swing.JFrame {
         updateForwardPowerBargraph(dto);
         updateSWRBargraph(dto);
         updateSWR(dto);
-        update_dBmBargraph(dto);
-        update_dbmPower(dto);
+        
+        if(isIndBmMode) {
+            update_dBmBargraph(dto);
+            update_dbmPower(dto);
+        }
+        
         updateStatusField("Connected", false);
         jl_ConnectedIcon.setVisible(true);
     }
@@ -219,10 +224,6 @@ public class PowerDisplay extends javax.swing.JFrame {
         }
     }
 
-    private static void set_dBmPanelVisible(boolean isVisible) {
-        dbPanel.setVisible(isVisible);
-    }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -281,7 +282,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jp_dBRL_Mid = new javax.swing.JProgressBar();
         jp_dBRL_Warning = new javax.swing.JProgressBar();
         jp_dBRL_High = new javax.swing.JProgressBar();
-        jl_dBM_Scale_0 = new javax.swing.JLabel();
+        jl_dBm_Scale_0 = new javax.swing.JLabel();
         jl_dBm_Scale_50 = new javax.swing.JLabel();
         jl_dBm_Scale_100 = new javax.swing.JLabel();
         jl_dBm_Scale_300 = new javax.swing.JLabel();
@@ -542,6 +543,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         jp_dBmLow.setBackground(new java.awt.Color(0, 47, 63));
         jp_dBmLow.setForeground(new java.awt.Color(21, 166, 215));
         jp_dBmLow.setMaximum(50);
+        jp_dBmLow.setMinimum(30);
         jp_dBmLow.setBorder(null);
         jp_dBmLow.setBorderPainted(false);
         jp_dBmLow.setString("0");
@@ -631,14 +633,14 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         dbPanel.add(jp_DBRL_BargraphPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 65, -1, 34));
 
-        jl_dBM_Scale_0.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        jl_dBM_Scale_0.setForeground(new java.awt.Color(204, 204, 0));
-        jl_dBM_Scale_0.setText("0");
-        dbPanel.add(jl_dBM_Scale_0, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 14, -1));
+        jl_dBm_Scale_0.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBm_Scale_0.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBm_Scale_0.setText("30");
+        dbPanel.add(jl_dBm_Scale_0, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 14, -1));
 
         jl_dBm_Scale_50.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jl_dBm_Scale_50.setForeground(new java.awt.Color(204, 204, 0));
-        jl_dBm_Scale_50.setText("47");
+        jl_dBm_Scale_50.setText("40");
         dbPanel.add(jl_dBm_Scale_50, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
 
         jl_dBm_Scale_100.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
@@ -762,11 +764,13 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private void dbMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbMenuItemActionPerformed
         mainPanel.setVisible(false);
+        isIndBmMode = true;
         dbPanel.setVisible(true);
     }//GEN-LAST:event_dbMenuItemActionPerformed
 
     private void powerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_powerMenuItemActionPerformed
         dbPanel.setVisible(false);
+        isIndBmMode = false;
         mainPanel.setVisible(true);
     }//GEN-LAST:event_powerMenuItemActionPerformed
 
@@ -783,8 +787,6 @@ public class PowerDisplay extends javax.swing.JFrame {
             PowerDisplay pd = new PowerDisplay();
             pd.setVisible(true);
         });
-
-        set_dBmPanelVisible(false);
 
         try {
             // Hackish way to prevent NPE's when you cannot connect to te LP-100A
@@ -831,10 +833,10 @@ public class PowerDisplay extends javax.swing.JFrame {
     private javax.swing.JLabel jl_DBRL_Scale_3;
     private javax.swing.JLabel jl_Power;
     public static javax.swing.JLabel jl_SWR;
-    private javax.swing.JLabel jl_dBM_Scale_0;
     private javax.swing.JLabel jl_dBRL;
     public static javax.swing.JLabel jl_dBRL_Text;
     private javax.swing.JLabel jl_dBm;
+    private javax.swing.JLabel jl_dBm_Scale_0;
     private javax.swing.JLabel jl_dBm_Scale_100;
     private javax.swing.JLabel jl_dBm_Scale_1000;
     private javax.swing.JLabel jl_dBm_Scale_1500;
