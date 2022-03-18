@@ -14,7 +14,6 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static SerialComManager serialComManager;
     private static long comPortHandle;
     private static String comPort;
-    private static boolean isUsingLatestLPFirmware;
 
     /**
      * Creates new form PowerDisplay
@@ -59,7 +58,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         
         try {
             String[] dataArray = data.substring(1).split(",");
-            PowerDataDto powerDto = new PowerDataDto(dataArray, isUsingLatestLPFirmware);
+            PowerDataDto powerDto = new PowerDataDto(dataArray);
             updateUserInterface(powerDto);
         } catch (Exception ex) {
             //Debugging only. Need to add application logging and set this to DEBUG.
@@ -71,6 +70,8 @@ public class PowerDisplay extends javax.swing.JFrame {
         updateForwardPowerBargraph(dto);
         updateSWRBargraph(dto);
         updateSWR(dto);
+        update_dBmBargraph(dto);
+        update_dbmPower(dto);
         updateStatusField("Connected", false);
         jl_ConnectedIcon.setVisible(true);
     }
@@ -115,6 +116,53 @@ public class PowerDisplay extends javax.swing.JFrame {
             jpPwrHigh.setValue(0);
         }
 
+    }
+
+    private static void update_dBmBargraph(PowerDataDto dto) {
+        if (dto.get_dBm() >= 0) {
+            jp_dBmLow.setValue(dto.get_dBm().intValue());
+        }
+
+        if (dto.get_dBm() > 50) {
+            jp_dBm_LowMid.setValue(dto.get_dBm().intValue());
+        }
+        if (dto.get_dBm() < 50) {
+            jp_dBm_LowMid.setValue(0);
+        }
+
+        if (dto.get_dBm() >= 56.98) {
+            jp_dBm_Mid.setValue(dto.get_dBm().intValue());
+        } else if (dto.getForwardPower() < 56.98) {
+            jp_dBm_Mid.setValue(0);
+        }
+
+        if (dto.get_dBm() > 60 && dto.get_dBm() <= 61.76) {
+            jp_dBm_High.setValue(dto.get_dBm().intValue());
+        } else if (dto.getForwardPower() < 60) {
+            jp_dBm_High.setValue(0);
+        }
+
+        if (dto.get_dBm() > 61.76 && dto.get_dBm() <= 63.01) {
+            jp_dBm_HighHigh.setValue(dto.get_dBm().intValue());
+            jp_dBm_High.setValue(dto.get_dBm().intValue());
+            jl_dBm_Text.setForeground(Color.RED);
+        } else if (dto.get_dBm() <= 61.76) {
+            jp_dBm_HighHigh.setValue(0);
+            jl_dBm_Text.setForeground(Color.WHITE);
+        }
+
+        if (dto.get_dBm() == -2.3) {
+            jp_dBmLow.setValue(0);
+            jp_dBm_LowMid.setValue(0);            
+            jp_dBm_Mid.setValue(0);
+            jp_dBm_High.setValue(0);
+            jp_dBm_HighHigh.setValue(0);
+        }
+
+    }
+
+    private static void update_dbmPower(PowerDataDto dto) {
+        jl_dBm_Text.setText(dto.get_dBm().toString());
     }
 
     private static void updateForwardPower(PowerDataDto dto) {
@@ -171,6 +219,11 @@ public class PowerDisplay extends javax.swing.JFrame {
         }
     }
 
+    private static void set_dBmPanelVisible(boolean isVisible) {
+        dbPanel.setVisible(isVisible);
+    }
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -212,8 +265,40 @@ public class PowerDisplay extends javax.swing.JFrame {
         jlPwr1500 = new javax.swing.JLabel();
         jlStatusField = new javax.swing.JLabel();
         jl_ConnectedIcon = new javax.swing.JLabel();
+        dbPanel = new javax.swing.JPanel();
+        jl_dBm = new javax.swing.JLabel();
+        jl_dBRL = new javax.swing.JLabel();
+        jp_dBmBargraphPanel = new javax.swing.JPanel();
+        jl_dBm_Text = new javax.swing.JLabel();
+        jp_dBmLow = new javax.swing.JProgressBar();
+        jp_dBm_LowMid = new javax.swing.JProgressBar();
+        jp_dBm_Mid = new javax.swing.JProgressBar();
+        jp_dBm_High = new javax.swing.JProgressBar();
+        jp_dBm_HighHigh = new javax.swing.JProgressBar();
+        jp_DBRL_BargraphPanel = new javax.swing.JPanel();
+        jl_dBRL_Text = new javax.swing.JLabel();
+        jp_dBRL_Low = new javax.swing.JProgressBar();
+        jp_dBRL_Mid = new javax.swing.JProgressBar();
+        jp_dBRL_Warning = new javax.swing.JProgressBar();
+        jp_dBRL_High = new javax.swing.JProgressBar();
+        jl_dBM_Scale_0 = new javax.swing.JLabel();
+        jl_dBm_Scale_50 = new javax.swing.JLabel();
+        jl_dBm_Scale_100 = new javax.swing.JLabel();
+        jl_dBm_Scale_300 = new javax.swing.JLabel();
+        jl_dBm_Scale_500 = new javax.swing.JLabel();
+        jl_dBm_Scale_1000 = new javax.swing.JLabel();
+        jl_dBm_Scale_1500 = new javax.swing.JLabel();
+        jl_dBm_Scale_2000 = new javax.swing.JLabel();
+        jl_DBRL_Scale_0 = new javax.swing.JLabel();
+        jl_DBRL_Scale_15 = new javax.swing.JLabel();
+        jl_DBRL_Scale_2 = new javax.swing.JLabel();
+        jl_DBRL_Scale_25 = new javax.swing.JLabel();
+        jl_DBRL_Scale_3 = new javax.swing.JLabel();
+        jl_ConnectedIcon_dbPanel = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        powerMenuItem = new javax.swing.JMenuItem();
+        dbMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -430,6 +515,195 @@ public class PowerDisplay extends javax.swing.JFrame {
 
         getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 150));
 
+        dbPanel.setBackground(new java.awt.Color(0, 0, 0));
+        dbPanel.setForeground(new java.awt.Color(255, 255, 255));
+        dbPanel.setMaximumSize(new java.awt.Dimension(254, 279));
+        dbPanel.setMinimumSize(new java.awt.Dimension(254, 279));
+        dbPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jl_dBm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jl_dBm.setForeground(new java.awt.Color(255, 255, 255));
+        jl_dBm.setText("dBm");
+        dbPanel.add(jl_dBm, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 30));
+
+        jl_dBRL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jl_dBRL.setForeground(new java.awt.Color(255, 255, 255));
+        jl_dBRL.setText("dBRL");
+        dbPanel.add(jl_dBRL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, 25));
+
+        jp_dBmBargraphPanel.setBackground(new java.awt.Color(0, 0, 0));
+        jp_dBmBargraphPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jl_dBm_Text.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jl_dBm_Text.setForeground(new java.awt.Color(255, 255, 255));
+        jl_dBm_Text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jp_dBmBargraphPanel.add(jl_dBm_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 30));
+
+        jp_dBmLow.setBackground(new java.awt.Color(0, 47, 63));
+        jp_dBmLow.setForeground(new java.awt.Color(21, 166, 215));
+        jp_dBmLow.setMaximum(50);
+        jp_dBmLow.setBorder(null);
+        jp_dBmLow.setBorderPainted(false);
+        jp_dBmLow.setString("0");
+        jp_dBmBargraphPanel.add(jp_dBmLow, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 0, 115, 30));
+
+        jp_dBm_LowMid.setBackground(new java.awt.Color(0, 47, 63));
+        jp_dBm_LowMid.setForeground(new java.awt.Color(21, 166, 215));
+        jp_dBm_LowMid.setMaximum(57);
+        jp_dBm_LowMid.setMinimum(50);
+        jp_dBm_LowMid.setBorder(null);
+        jp_dBm_LowMid.setBorderPainted(false);
+        jp_dBmBargraphPanel.add(jp_dBm_LowMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 90, 30));
+
+        jp_dBm_Mid.setBackground(new java.awt.Color(42, 17, 0));
+        jp_dBm_Mid.setForeground(new java.awt.Color(249, 136, 60));
+        jp_dBm_Mid.setMaximum(60);
+        jp_dBm_Mid.setMinimum(57);
+        jp_dBm_Mid.setBorder(null);
+        jp_dBm_Mid.setBorderPainted(false);
+        jp_dBmBargraphPanel.add(jp_dBm_Mid, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 40, 30));
+
+        jp_dBm_High.setBackground(new java.awt.Color(42, 17, 0));
+        jp_dBm_High.setForeground(new java.awt.Color(249, 136, 60));
+        jp_dBm_High.setMaximum(62);
+        jp_dBm_High.setMinimum(60);
+        jp_dBm_High.setBorder(null);
+        jp_dBm_High.setBorderPainted(false);
+        jp_dBmBargraphPanel.add(jp_dBm_High, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 30, 30));
+
+        jp_dBm_HighHigh.setBackground(new java.awt.Color(49, 0, 0));
+        jp_dBm_HighHigh.setForeground(new java.awt.Color(255, 0, 0));
+        jp_dBm_HighHigh.setMaximum(64);
+        jp_dBm_HighHigh.setMinimum(62);
+        jp_dBm_HighHigh.setBorder(null);
+        jp_dBm_HighHigh.setBorderPainted(false);
+        jp_dBmBargraphPanel.add(jp_dBm_HighHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 30, 30));
+
+        dbPanel.add(jp_dBmBargraphPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 11, 390, 30));
+
+        jp_DBRL_BargraphPanel.setBackground(new java.awt.Color(0, 0, 0));
+        jp_DBRL_BargraphPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jl_dBRL_Text.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jl_dBRL_Text.setForeground(new java.awt.Color(255, 255, 255));
+        jl_dBRL_Text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jl_dBRL_Text.setMaximumSize(new java.awt.Dimension(44, 22));
+        jl_dBRL_Text.setMinimumSize(new java.awt.Dimension(44, 22));
+        jl_dBRL_Text.setPreferredSize(new java.awt.Dimension(44, 22));
+        jp_DBRL_BargraphPanel.add(jl_dBRL_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 30));
+
+        jp_dBRL_Low.setBackground(new java.awt.Color(0, 47, 63));
+        jp_dBRL_Low.setForeground(new java.awt.Color(21, 166, 215));
+        jp_dBRL_Low.setMaximum(150);
+        jp_dBRL_Low.setMinimum(100);
+        jp_dBRL_Low.setValue(0);
+        jp_dBRL_Low.setBorder(null);
+        jp_dBRL_Low.setBorderPainted(false);
+        jp_dBRL_Low.setOpaque(true);
+        jp_DBRL_BargraphPanel.add(jp_dBRL_Low, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 70, 30));
+
+        jp_dBRL_Mid.setBackground(new java.awt.Color(60, 47, 0));
+        jp_dBRL_Mid.setForeground(new java.awt.Color(204, 204, 0));
+        jp_dBRL_Mid.setMaximum(200);
+        jp_dBRL_Mid.setMinimum(150);
+        jp_dBRL_Mid.setValue(0);
+        jp_dBRL_Mid.setBorder(null);
+        jp_dBRL_Mid.setBorderPainted(false);
+        jp_DBRL_BargraphPanel.add(jp_dBRL_Mid, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 50, 30));
+
+        jp_dBRL_Warning.setBackground(new java.awt.Color(42, 17, 0));
+        jp_dBRL_Warning.setForeground(new java.awt.Color(204, 102, 0));
+        jp_dBRL_Warning.setMaximum(250);
+        jp_dBRL_Warning.setMinimum(200);
+        jp_dBRL_Warning.setValue(0);
+        jp_dBRL_Warning.setBorder(null);
+        jp_dBRL_Warning.setBorderPainted(false);
+        jp_DBRL_BargraphPanel.add(jp_dBRL_Warning, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 50, 30));
+
+        jp_dBRL_High.setBackground(new java.awt.Color(49, 0, 0));
+        jp_dBRL_High.setForeground(new java.awt.Color(255, 0, 0));
+        jp_dBRL_High.setMaximum(300);
+        jp_dBRL_High.setMinimum(250);
+        jp_dBRL_High.setValue(0);
+        jp_dBRL_High.setBorder(null);
+        jp_dBRL_High.setBorderPainted(false);
+        jp_DBRL_BargraphPanel.add(jp_dBRL_High, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 50, 30));
+
+        dbPanel.add(jp_DBRL_BargraphPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 65, -1, 34));
+
+        jl_dBM_Scale_0.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBM_Scale_0.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBM_Scale_0.setText("0");
+        dbPanel.add(jl_dBM_Scale_0, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 14, -1));
+
+        jl_dBm_Scale_50.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBm_Scale_50.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBm_Scale_50.setText("47");
+        dbPanel.add(jl_dBm_Scale_50, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
+
+        jl_dBm_Scale_100.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBm_Scale_100.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBm_Scale_100.setText("50");
+        dbPanel.add(jl_dBm_Scale_100, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, -1, -1));
+
+        jl_dBm_Scale_300.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBm_Scale_300.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBm_Scale_300.setText("54.7");
+        dbPanel.add(jl_dBm_Scale_300, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, -1, -1));
+
+        jl_dBm_Scale_500.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBm_Scale_500.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBm_Scale_500.setText("56.9");
+        dbPanel.add(jl_dBm_Scale_500, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
+
+        jl_dBm_Scale_1000.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBm_Scale_1000.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBm_Scale_1000.setText("60");
+        dbPanel.add(jl_dBm_Scale_1000, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
+
+        jl_dBm_Scale_1500.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBm_Scale_1500.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBm_Scale_1500.setText("61.7");
+        dbPanel.add(jl_dBm_Scale_1500, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 30, -1));
+
+        jl_dBm_Scale_2000.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_dBm_Scale_2000.setForeground(new java.awt.Color(204, 204, 0));
+        jl_dBm_Scale_2000.setText("63");
+        dbPanel.add(jl_dBm_Scale_2000, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, -1));
+
+        jl_DBRL_Scale_0.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_DBRL_Scale_0.setForeground(new java.awt.Color(204, 204, 0));
+        jl_DBRL_Scale_0.setText("66.02");
+        dbPanel.add(jl_DBRL_Scale_0, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, -1));
+
+        jl_DBRL_Scale_15.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_DBRL_Scale_15.setForeground(new java.awt.Color(204, 204, 0));
+        jl_DBRL_Scale_15.setText("13.97");
+        dbPanel.add(jl_DBRL_Scale_15, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
+
+        jl_DBRL_Scale_2.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_DBRL_Scale_2.setForeground(new java.awt.Color(204, 204, 0));
+        jl_DBRL_Scale_2.setText("9.54");
+        dbPanel.add(jl_DBRL_Scale_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, -1, -1));
+
+        jl_DBRL_Scale_25.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_DBRL_Scale_25.setForeground(new java.awt.Color(204, 204, 0));
+        jl_DBRL_Scale_25.setText("7.36");
+        dbPanel.add(jl_DBRL_Scale_25, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, -1, -1));
+
+        jl_DBRL_Scale_3.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jl_DBRL_Scale_3.setForeground(new java.awt.Color(204, 204, 0));
+        jl_DBRL_Scale_3.setText("6.02");
+        dbPanel.add(jl_DBRL_Scale_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, -1, -1));
+
+        jl_ConnectedIcon_dbPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/wt2p/lp100a/icons/launch_white.png"))); // NOI18N
+        jl_ConnectedIcon_dbPanel.setFocusable(false);
+        jl_ConnectedIcon_dbPanel.setRequestFocusEnabled(false);
+        jl_ConnectedIcon_dbPanel.setVerifyInputWhenFocusTarget(false);
+        dbPanel.add(jl_ConnectedIcon_dbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+
+        getContentPane().add(dbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 150));
+
         menuBar.setBackground(new java.awt.Color(0, 0, 0));
         menuBar.setForeground(new java.awt.Color(102, 102, 102));
         menuBar.setBorderPainted(false);
@@ -439,8 +713,28 @@ public class PowerDisplay extends javax.swing.JFrame {
         fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/wt2p/lp100a/icons/switch_profile_white.png"))); // NOI18N
         fileMenu.setMnemonic('f');
 
+        powerMenuItem.setBackground(new java.awt.Color(0, 0, 0));
+        powerMenuItem.setForeground(new java.awt.Color(255, 255, 0));
+        powerMenuItem.setText("Meter: Power/SWR");
+        powerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                powerMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(powerMenuItem);
+
+        dbMenuItem.setBackground(new java.awt.Color(0, 0, 0));
+        dbMenuItem.setForeground(new java.awt.Color(255, 255, 0));
+        dbMenuItem.setText("Meter: dBm/dBRL");
+        dbMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dbMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(dbMenuItem);
+
         exitMenuItem.setBackground(new java.awt.Color(0, 0, 0));
-        exitMenuItem.setForeground(new java.awt.Color(255, 255, 51));
+        exitMenuItem.setForeground(new java.awt.Color(255, 0, 0));
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -466,6 +760,16 @@ public class PowerDisplay extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
+    private void dbMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbMenuItemActionPerformed
+        mainPanel.setVisible(false);
+        dbPanel.setVisible(true);
+    }//GEN-LAST:event_dbMenuItemActionPerformed
+
+    private void powerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_powerMenuItemActionPerformed
+        dbPanel.setVisible(false);
+        mainPanel.setVisible(true);
+    }//GEN-LAST:event_powerMenuItemActionPerformed
+
     public static void main(String args[]) {
         //TODO: Use a argument parser here to make things simpler
         if (args.length > 0) {
@@ -480,6 +784,8 @@ public class PowerDisplay extends javax.swing.JFrame {
             pd.setVisible(true);
         });
 
+        set_dBmPanelVisible(false);
+
         try {
             // Hackish way to prevent NPE's when you cannot connect to te LP-100A
             // We sleep for 300ms to allow for all of the UI elements to be
@@ -487,7 +793,7 @@ public class PowerDisplay extends javax.swing.JFrame {
             Thread.sleep(400);
             connectToComPort();
             startReadingFromComPort();
-            updateStatusField("Connected", false);
+            updateStatusField("Connected", false);           
         } catch (IOException | InterruptedException ex) {
             updateStatusField("Connection error to LP-100A! Restart.", true);
             jl_ConnectedIcon.setVisible(false);
@@ -495,6 +801,8 @@ public class PowerDisplay extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem dbMenuItem;
+    private static javax.swing.JPanel dbPanel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     public static javax.swing.JLabel jlPowerText;
@@ -515,8 +823,26 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static javax.swing.JLabel jlSWRAlarm;
     private static javax.swing.JLabel jlStatusField;
     private static javax.swing.JLabel jl_ConnectedIcon;
+    private static javax.swing.JLabel jl_ConnectedIcon_dbPanel;
+    private javax.swing.JLabel jl_DBRL_Scale_0;
+    private javax.swing.JLabel jl_DBRL_Scale_15;
+    private javax.swing.JLabel jl_DBRL_Scale_2;
+    private javax.swing.JLabel jl_DBRL_Scale_25;
+    private javax.swing.JLabel jl_DBRL_Scale_3;
     private javax.swing.JLabel jl_Power;
     public static javax.swing.JLabel jl_SWR;
+    private javax.swing.JLabel jl_dBM_Scale_0;
+    private javax.swing.JLabel jl_dBRL;
+    public static javax.swing.JLabel jl_dBRL_Text;
+    private javax.swing.JLabel jl_dBm;
+    private javax.swing.JLabel jl_dBm_Scale_100;
+    private javax.swing.JLabel jl_dBm_Scale_1000;
+    private javax.swing.JLabel jl_dBm_Scale_1500;
+    private javax.swing.JLabel jl_dBm_Scale_2000;
+    private javax.swing.JLabel jl_dBm_Scale_300;
+    private javax.swing.JLabel jl_dBm_Scale_50;
+    private javax.swing.JLabel jl_dBm_Scale_500;
+    public static javax.swing.JLabel jl_dBm_Text;
     private javax.swing.JPanel jpPwrBargraphPanel;
     private static javax.swing.JProgressBar jpPwrHigh;
     private static javax.swing.JProgressBar jpPwrHighHigh;
@@ -528,8 +854,20 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static javax.swing.JProgressBar jpSWRMedium;
     private javax.swing.JPanel jpSWRPanel;
     private static javax.swing.JProgressBar jpSWRWarning;
-    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel jp_DBRL_BargraphPanel;
+    private static javax.swing.JProgressBar jp_dBRL_High;
+    private static javax.swing.JProgressBar jp_dBRL_Low;
+    private static javax.swing.JProgressBar jp_dBRL_Mid;
+    private static javax.swing.JProgressBar jp_dBRL_Warning;
+    private javax.swing.JPanel jp_dBmBargraphPanel;
+    private static javax.swing.JProgressBar jp_dBmLow;
+    private static javax.swing.JProgressBar jp_dBm_High;
+    private static javax.swing.JProgressBar jp_dBm_HighHigh;
+    private static javax.swing.JProgressBar jp_dBm_LowMid;
+    private static javax.swing.JProgressBar jp_dBm_Mid;
+    private static javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem powerMenuItem;
     // End of variables declaration//GEN-END:variables
 
 }

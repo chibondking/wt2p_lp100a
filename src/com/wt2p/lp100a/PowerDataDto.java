@@ -15,14 +15,12 @@ public class PowerDataDto extends Object implements Serializable {
     private double alarmSetPoint;
     private String callsign;
     private int transmittingRadio;
-    private boolean isUsingLatestLPFirmware;
     private double peakHold;
     private double dBm;
     private double swrValue;
     private DecimalFormat powerFormat = new DecimalFormat("#,##0.00");
     
-    public PowerDataDto(String[] dataArray, boolean latestLpFirmware) {
-        this.isUsingLatestLPFirmware = latestLpFirmware;
+    public PowerDataDto(String[] dataArray) {
         this.parseDataArray(dataArray);
     }
     
@@ -35,10 +33,6 @@ public class PowerDataDto extends Object implements Serializable {
         this.setPeakHold(convertValueToDouble(dataArray[6]));
         this.setdBm(convertValueToDouble(dataArray[7]));
         this.setSWR(convertValueToDouble(dataArray[8]));
-        
-        if (isUsingLatestLPFirmware) {
-            this.setTransmittingRadio(Integer.parseInt(dataArray[9]));
-        }
     }
     
     private double convertValueToDouble(String value) {
@@ -80,11 +74,7 @@ public class PowerDataDto extends Object implements Serializable {
     public String getCallsign() {
         return this.callsign;
     }
-    
-    private void setTransmittingRadio(int value) {
-        this.transmittingRadio = value; 
-    }
-    
+   
     public int getTransmittingRadio() {
         return this.transmittingRadio;
     }
@@ -100,6 +90,13 @@ public class PowerDataDto extends Object implements Serializable {
     public Double get_dBm() {
         return this.dBm;
     }
+
+    public Double convertSWRTodBRL(double value) {
+
+         
+        return null;
+    }
+
     
     private void setSWR(double value) { this.swrValue = value; }
     
