@@ -188,7 +188,7 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     private static void updateSWRBargraph(PowerDataDto dto) {
 
-        if (dto.getSWR() >= 1.01) {
+        if (dto.getSWR() >= 1.00) {
             jpSWRLow.setValue(dto.getSWRInteger());
             jlSWRAlarm.setVisible(false);
         }
@@ -210,19 +210,19 @@ public class PowerDisplay extends javax.swing.JFrame {
             jlSWRAlarm.setVisible(true);
         }
 
-        try {
-            //Try to make it so the SWR bargraph doesn't flicker??
-            Thread.sleep(150);
-        } catch (Exception ex) {
-            //Ignore
-        }
-
         if (dto.getSWR() == 1.00) {
             jpSWRLow.setValue(1);
             jpSWRMedium.setValue(0);
             jpSWRWarning.setValue(0);
             jpSWRHigh.setValue(0);
             jlSWRAlarm.setForeground(Color.BLACK);
+        }
+        
+        try {
+            //Try to make it so the SWR bargraph doesn't flicker??
+            Thread.sleep(150);
+        } catch (Exception ex) {
+            //Ignore
         }
     }
 
