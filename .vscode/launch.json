@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run LP-100A",
+            "request": "launch",
+            "mainClass": "com.wt2p.lp100a.PowerDisplay",
+            "projectName": "WT2P_LP100A",
+            "args": "${command:AskForArgs}",
+            "console": "integratedTerminal",
+            "classPaths": [
+                "${workspaceFolder}/lib/sp-core.jar",
+                "${workspaceFolder}/lib/sp-tty.jar",
+                "${workspaceFolder}/lib/absolutelayout/AbsoluteLayout.jar",
+                "${workspaceFolder}/build"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Debug LP-100A",
+            "request": "launch",
+            "mainClass": "com.wt2p.lp100a.PowerDisplay",
+            "projectName": "WT2P_LP100A",
+            "args": "${command:AskForArgs}",
+            "console": "integratedTerminal",
+            "classPaths": [
+                "${workspaceFolder}/lib/sp-core.jar",
+                "${workspaceFolder}/lib/sp-tty.jar",
+                "${workspaceFolder}/lib/absolutelayout/AbsoluteLayout.jar",
+                "${workspaceFolder}/build"
+            ]
+        }
+    ]
+}

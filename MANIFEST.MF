@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: com.wt2p.lp100a.PowerDisplay
+Implementation-Vendor: cedrickj
+Implementation-Title: WT2P LP-100A Utility
+Implementation-Version: 1.0

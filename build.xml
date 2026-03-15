@@ -1,74 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- You may freely edit this file. See commented blocks below for -->
-<!-- some examples of how to customize the build. -->
-<!-- (If you delete it and reopen the project it will be recreated.) -->
-<!-- By default, only the Clean and Build commands use this build script. -->
-<!-- Commands such as Run, Debug, and Test only use this build script if -->
-<!-- the Compile on Save feature is turned off for the project. -->
-<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
-<!-- in the project's Project Properties dialog box.-->
-<project name="WT2P_LP100A" default="default" basedir=".">
-    <description>Builds, tests, and runs the project WT2P_LP100A.</description>
-    <import file="nbproject/build-impl.xml"/>
-    
-    <target name="wt2p-jar" depends="clean,compile,jar"/>
-    <!--
-    There exist several targets which are by default empty and which can be 
-    used for execution of your tasks. These targets are usually executed 
-    before and after some main targets. They are: 
+<project name="WT2P_LP100A" default="dist" basedir=".">
+    <description>
+        LP-100A Power Meter Display Application
+        Standalone Ant build - works with VSCode, NetBeans, and command line
+    </description>
 
-      -pre-init:                 called before initialization of project properties
-      -post-init:                called after initialization of project properties
-      -pre-compile:              called before javac compilation
-      -post-compile:             called after javac compilation
-      -pre-compile-single:       called before javac compilation of single file
-      -post-compile-single:      called after javac compilation of single file
-      -pre-compile-test:         called before javac compilation of JUnit tests
-      -post-compile-test:        called after javac compilation of JUnit tests
-      -pre-compile-test-single:  called before javac compilation of single JUnit test
-      -post-compile-test-single: called after javac compilation of single JUunit test
-      -pre-jar:                  called before JAR building
-      -post-jar:                 called after JAR building
-      -post-clean:               called after cleaning build products
+    <property name="src.dir" location="src"/>
+    <property name="build.dir" location="build"/>
+    <property name="dist.dir" location="dist"/>
+    <property name="lib.dir" location="lib"/>
+    <property name="main.class" value="com.wt2p.lp100a.PowerDisplay"/>
 
-    (Targets beginning with '-' are not intended to be called on their own.)
+    <property name="java.version" value="1.8"/>
 
-    Example of inserting an obfuscator after compilation could look like this:
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
 
-        <target name="-post-compile">
-            <obfuscate>
-                <fileset dir="${build.classes.dir}"/>
-            </obfuscate>
-        </target>
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
 
-    For list of available properties check the imported 
-    nbproject/build-impl.xml file. 
+    <target name="compile" depends="init" description="Compile Java sources">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" source="${java.version}" target="${java.version}" encoding="UTF-8" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}" excludes="**/*.java"/>
+        </copy>
+    </target>
 
+    <target name="dist" depends="compile" description="Create JAR file">
+        <jar destfile="${dist.dir}/WT2P_LP100A.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Implementation-Vendor" value="cedrickj"/>
+                <attribute name="Implementation-Title" value="WT2P LP-100A Utility"/>
+                <attribute name="Implementation-Version" value="1.0"/>
+            </manifest>
+        </jar>
+        <copy todir="${dist.dir}/lib">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+    </target>
 
-    Another way to customize the build is by overriding existing main targets.
-    The targets of interest are: 
+    <target name="clean" description="Clean build artifacts">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
 
-      -init-macrodef-javac:     defines macro for javac compilation
-      -init-macrodef-junit:     defines macro for junit execution
-      -init-macrodef-debug:     defines macro for class debugging
-      -init-macrodef-java:      defines macro for class execution
-      -do-jar:                  JAR building
-      run:                      execution of project 
-      -javadoc-build:           Javadoc generation
-      test-report:              JUnit report generation
+    <target name="run" depends="dist" description="Run the application">
+        <java fork="true" classname="${main.class}">
+            <classpath>
+                <pathelement location="${dist.dir}/WT2P_LP100A.jar"/>
+                <pathelement location="${dist.dir}/lib/sp-core.jar"/>
+                <pathelement location="${dist.dir}/lib/sp-tty.jar"/>
+                <pathelement location="${dist.dir}/lib/absolutelayout/AbsoluteLayout.jar"/>
+            </classpath>
+            <arg value="${args}"/>
+        </java>
+    </target>
 
-    An example of overriding the target for project execution could look like this:
-
-        <target name="run" depends="WT2P_OSD_LP100A-impl.jar">
-            <exec dir="bin" executable="launcher.exe">
-                <arg file="${dist.jar}"/>
-            </exec>
-        </target>
-
-    Notice that the overridden target depends on the jar target and not only on 
-    the compile target as the regular run target does. Again, for a list of available 
-    properties which you can use, check the target you are overriding in the
-    nbproject/build-impl.xml file. 
-
-    -->
+    <target name="rebuild" depends="clean,dist" description="Clean and rebuild"/>
 </project>
