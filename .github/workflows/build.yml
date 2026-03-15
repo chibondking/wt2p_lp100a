@@ -1,0 +1,38 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [master, '**']
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+    
+    - name: Build with Ant
+      run: ant clean compile
+    
+    - name: Create JAR
+      run: |
+        mkdir -p build dist
+        javac -source 1.8 -target 1.8 -encoding UTF-8 \
+          -cp "lib/sp-core.jar:lib/sp-tty.jar:lib/absolutelayout/AbsoluteLayout.jar" \
+          -d build -sourcepath src src/com/wt2p/lp100a/*.java
+        jar cfm dist/WT2P_LP100A.jar MANIFEST.MF -C build .
+    
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: WT2P_LP100A-jar
+        path: dist/WT2P_LP100A.jar
+        retention-days: 30
