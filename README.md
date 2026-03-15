@@ -129,3 +129,59 @@ Apply RF from your radio and the application will display Power and SWR measurem
 GPL v.3
 
 Please feel free to contribute enhancements.
+
+---
+
+## Building the Project
+
+### Prerequisites
+- Java JDK 8 or higher
+- For Ant-based build: Apache Ant
+- For VSCode: VSCode with Java Extension Pack
+
+### Building
+
+#### Using Command Line (Ant)
+```bash
+ant clean dist
+```
+
+#### Using Command Line (Manual)
+```bash
+mkdir -p build dist
+javac -source 1.8 -target 1.8 -encoding UTF-8 -cp "lib/sp-core.jar:lib/sp-tty.jar:lib/absolutelayout/AbsoluteLayout.jar" -d build -sourcepath src src/com/wt2p/lp100a/*.java
+jar cfm dist/WT2P_LP100A.jar MANIFEST.MF -C build .
+```
+
+#### Using NetBeans
+Open the project in NetBeans and use the Build or Run commands (Shift+F11 to build, F6 to run).
+
+#### Using VSCode
+1. Open the project folder in VSCode
+2. Install the Java Extension Pack
+3. Press F5 or use the Debug menu to run
+4. Or use Ctrl+Shift+P -> "Tasks: Run Build Task" for manual compilation
+
+### Output
+The built JAR file will be in `dist/WT2P_LP100A.jar`.
+
+### Running
+```bash
+java -jar dist/WT2P_LP100A.jar <COM_PORT>
+```
+
+Example:
+```bash
+java -jar dist/WT2P_LP100A.jar COM9    # Windows
+java -jar dist/WT2P_LP100A.jar /dev/ttyUSB0  # Linux
+```
+
+---
+
+## Changelog
+
+### 2026-03-15
+- Updated build mechanism to be IDE-agnostic (works with VSCode, NetBeans, and command line)
+- Added standalone build.xml that doesn't require NetBeans
+- Added VSCode configuration files (.vscode/launch.json, .vscode/tasks.json, .vscode/settings.json)
+- Added MANIFEST.MF for JAR building

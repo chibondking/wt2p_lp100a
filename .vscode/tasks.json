@@ -1,0 +1,78 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build with Ant",
+            "type": "shell",
+            "command": "ant",
+            "args": ["clean", "dist"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Compile Java",
+            "type": "shell",
+            "command": "javac",
+            "args": [
+                "-source", "1.8",
+                "-target", "1.8",
+                "-encoding", "UTF-8",
+                "-cp", "lib/sp-core.jar:lib/sp-tty.jar:lib/absolutelayout/AbsoluteLayout.jar",
+                "-d", "build",
+                "-sourcepath", "src",
+                "src/com/wt2p/lp100a/*.java"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$javac"],
+            "dependsOn": ["Create build directory"]
+        },
+        {
+            "label": "Create build directory",
+            "type": "shell",
+            "command": "mkdir",
+            "args": ["-p", "build"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "Create JAR",
+            "type": "shell",
+            "command": "jar",
+            "args": [
+                "cfme", "dist/WT2P_LP100A.jar",
+                "-C", "build", "."
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": ["Compile Java"]
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "rm",
+            "args": ["-rf", "build", "dist"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "Full Build (manual)",
+            "type": "shell",
+            "command": "mkdir -p build dist && javac -source 1.8 -target 1.8 -encoding UTF-8 -cp lib/sp-core.jar:lib/sp-tty.jar:lib/absolutelayout/AbsoluteLayout.jar -d build -sourcepath src src/com/wt2p/lp100a/*.java && jar cfme dist/WT2P_LP100A.jar com.wt2p.lp100a.PowerDisplay -C build .",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$javac"]
+        }
+    ]
+}

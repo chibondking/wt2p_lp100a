@@ -1,0 +1,25 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "build",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-1.8",
+            "path": "/usr/lib/jvm/java-8-openjdk-amd64",
+            "default": true
+        }
+    ],
+    "java.project.classpathConfigurations": [
+        {
+            "id": "wt2p-lp100a-libs",
+            "classpaths": [
+                "lib/sp-core.jar",
+                "lib/sp-tty.jar",
+                "lib/absolutelayout/AbsoluteLayout.jar"
+            ]
+        }
+    ],
+    "files.exclude": {
+        "**/build": true,
+        "**/dist": true
+    }
+}
