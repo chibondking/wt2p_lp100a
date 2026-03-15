@@ -135,7 +135,7 @@ Please feel free to contribute enhancements.
 ## Building the Project
 
 ### Prerequisites
-- Java JDK 8 or higher
+- Java JDK 21 (Java 17+ also supported)
 - For Ant-based build: Apache Ant
 - For VSCode: VSCode with Java Extension Pack
 
@@ -149,7 +149,7 @@ ant clean dist
 #### Using Command Line (Manual)
 ```bash
 mkdir -p build dist
-javac -source 1.8 -target 1.8 -encoding UTF-8 -cp "lib/sp-core.jar:lib/sp-tty.jar:lib/absolutelayout/AbsoluteLayout.jar" -d build -sourcepath src src/com/wt2p/lp100a/*.java
+javac -source 21 -target 21 -encoding UTF-8 -cp "lib/jSerialComm-2.11.0.jar:lib/absolutelayout/AbsoluteLayout.jar" -d build -sourcepath src src/com/wt2p/lp100a/*.java
 jar cfm dist/WT2P_LP100A.jar MANIFEST.MF -C build .
 ```
 
@@ -167,21 +167,53 @@ The built JAR file will be in `dist/WT2P_LP100A.jar`.
 
 ### Running
 ```bash
-java -jar dist/WT2P_LP100A.jar <COM_PORT>
+java -jar dist/WT2P_LP100A.jar [options] [COM_PORT]
 ```
 
-Example:
+Examples:
 ```bash
-java -jar dist/WT2P_LP100A.jar COM9    # Windows
-java -jar dist/WT2P_LP100A.jar /dev/ttyUSB0  # Linux
+java -jar dist/WT2P_LP100A.jar COM9              # Windows
+java -jar dist/WT2P_LP100A.jar /dev/ttyUSB0      # Linux
+java -jar dist/WT2P_LP100A.jar --port COM3       # Using flag
 ```
+
+#### Command Line Options
+- `--port <port>` - Serial port (e.g., COM1, /dev/ttyUSB0)
+- `--baudrate <rate>` - Baud rate (default: 115200)
+- `--timeout <ms>` - Read timeout in milliseconds (default: 100)
+
+### Configuration File
+
+You can use a configuration file instead of command line arguments:
+
+1. Copy `lp100a.properties.example` to `lp100a.properties` in the project directory
+2. Or create `~/.wt2p/lp100a.properties` in your home directory
+
+Example configuration:
+```properties
+serial.port=COM1
+serial.baudrate=115200
+serial.timeout=100
+```
+
+The application checks for config in this order:
+1. Command line arguments (highest priority)
+2. `lp100a.properties` in current directory
+3. `~/.wt2p/lp100a.properties` (lowest priority)
 
 ---
 
 ## Changelog
 
-### 2026-03-15
+### 2026-03-15 (Cross-IDE Build)
 - Updated build mechanism to be IDE-agnostic (works with VSCode, NetBeans, and command line)
 - Added standalone build.xml that doesn't require NetBeans
 - Added VSCode configuration files (.vscode/launch.json, .vscode/tasks.json, .vscode/settings.json)
 - Added MANIFEST.MF for JAR building
+
+### 2026-03-15 (Java 21 Migration)
+- Migrated from serialpundit to jSerialComm library (AGPL)
+- Updated to Java 21 (also supports Java 17+)
+- Added configuration file support (lp100a.properties)
+- Added command-line argument parsing (--port, --baudrate, --timeout)
+- Cleaned up unused imports and code

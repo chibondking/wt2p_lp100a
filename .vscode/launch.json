@@ -10,8 +10,7 @@
             "args": "${command:AskForArgs}",
             "console": "integratedTerminal",
             "classPaths": [
-                "${workspaceFolder}/lib/sp-core.jar",
-                "${workspaceFolder}/lib/sp-tty.jar",
+                "${workspaceFolder}/lib/jSerialComm-2.11.0.jar",
                 "${workspaceFolder}/lib/absolutelayout/AbsoluteLayout.jar",
                 "${workspaceFolder}/build"
             ]
@@ -25,8 +24,7 @@
             "args": "${command:AskForArgs}",
             "console": "integratedTerminal",
             "classPaths": [
-                "${workspaceFolder}/lib/sp-core.jar",
-                "${workspaceFolder}/lib/sp-tty.jar",
+                "${workspaceFolder}/lib/jSerialComm-2.11.0.jar",
                 "${workspaceFolder}/lib/absolutelayout/AbsoluteLayout.jar",
                 "${workspaceFolder}/build"
             ]

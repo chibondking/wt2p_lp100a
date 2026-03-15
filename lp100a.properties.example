@@ -1,0 +1,14 @@
+# WT2P LP-100A Configuration
+# Copy to: ~/.wt2p/lp100a.properties or use default location
+
+# Serial port configuration
+# Windows: COM1, COM2, etc.
+# Linux: /dev/ttyUSB0, /dev/ttyS0, etc.
+# macOS: /dev/cu.usbserial-XXX, /dev/cu.usbserial-AXXXXXX
+serial.port=COM1
+
+# Baud rate (LP-100A uses 115200)
+serial.baudrate=115200
+
+# Read interval timeout in milliseconds
+serial.timeout=100

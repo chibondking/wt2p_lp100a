@@ -1,9 +1,14 @@
 package com.wt2p.lp100a;
 
-import com.serialpundit.core.SerialComException;
-import com.serialpundit.serial.SerialComManager;
+import com.fazecast.jSerialComm.SerialPort;
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
 
 /**
  *
@@ -11,10 +16,13 @@ import java.io.IOException;
  */
 public class PowerDisplay extends javax.swing.JFrame {
 
-    private static SerialComManager serialComManager;
-    private static long comPortHandle;
-    private static String comPort;
+    private static SerialPort comPort;
+    private static BufferedReader inputReader;
     private static boolean isIndBmMode = false;
+    
+    private static String configPort = "COM1";
+    private static int configBaudRate = 115200;
+    private static int configTimeout = 100;
 
     /**
      * Creates new form PowerDisplay
@@ -23,21 +31,42 @@ public class PowerDisplay extends javax.swing.JFrame {
         initComponents();
     }
 
-    private static void connectToComPort() throws SerialComException, IOException {
-        serialComManager = new SerialComManager();
-        comPortHandle = serialComManager.openComPort(comPort, true, true, true);
-        serialComManager.configureComPortData(comPortHandle, SerialComManager.DATABITS.DB_8, SerialComManager.STOPBITS.SB_1, SerialComManager.PARITY.P_NONE, SerialComManager.BAUDRATE.B115200, 0);
-        serialComManager.configureComPortControl(comPortHandle, SerialComManager.FLOWCONTROL.NONE, 'x', 'x', false, false);
+    private static void connectToComPort() throws IOException {
+        comPort = SerialPort.getCommPort(configPort);
+        comPort.setComPortParameters(configBaudRate, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY);
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, configTimeout, 0);
+        
+        if (!comPort.openPort()) {
+            throw new IOException("Failed to open serial port: " + configPort);
+        }
+        
+        inputReader = new BufferedReader(new InputStreamReader(comPort.getInputStream()));
     }
 
-    private static void startReadingFromComPort() throws SerialComException, InterruptedException {
+    private static void startReadingFromComPort() throws InterruptedException {
         while (true) {
-            Thread.sleep(10);
-            serialComManager.writeString(comPortHandle, "P", 2);
-            Thread.sleep(30);
-            String data = serialComManager.readString(comPortHandle);
-            parseStringFromLP100A(data);
-
+            try {
+                Thread.sleep(10);
+                comPort.getOutputStream().write("P".getBytes());
+                comPort.getOutputStream().flush();
+                Thread.sleep(30);
+                
+                StringBuilder data = new StringBuilder();
+                int ch;
+                while ((ch = inputReader.read()) != -1) {
+                    data.append((char) ch);
+                    if (ch == '\n' || ch == '\r') {
+                        break;
+                    }
+                }
+                
+                String dataStr = data.toString().trim();
+                if (!dataStr.isEmpty()) {
+                    parseStringFromLP100A(dataStr);
+                }
+            } catch (IOException e) {
+                break;
+            }
         }
     }
 
@@ -707,10 +736,8 @@ public class PowerDisplay extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        try {
-            serialComManager.closeComPort(comPortHandle);
-        } catch (Exception ex) {
-            // Do nothing
+        if (comPort != null && comPort.isOpen()) {
+            comPort.closePort();
         }
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
@@ -727,15 +754,48 @@ public class PowerDisplay extends javax.swing.JFrame {
         mainPanel.setVisible(true);
     }//GEN-LAST:event_powerMenuItemActionPerformed
 
+    private static void loadConfiguration() {
+        Properties props = new Properties();
+        
+        Path userConfig = Paths.get(System.getProperty("user.home"), ".wt2p", "lp100a.properties");
+        Path localConfig = Paths.get("lp100a.properties");
+        
+        try {
+            if (Files.exists(userConfig)) {
+                props.load(Files.newInputStream(userConfig));
+            } else if (Files.exists(localConfig)) {
+                props.load(Files.newInputStream(localConfig));
+            }
+        } catch (IOException e) {
+            System.err.println("Warning: Could not load config file: " + e.getMessage());
+        }
+        
+        if (props.containsKey("serial.port")) {
+            configPort = props.getProperty("serial.port");
+        }
+        if (props.containsKey("serial.baudrate")) {
+            configBaudRate = Integer.parseInt(props.getProperty("serial.baudrate"));
+        }
+        if (props.containsKey("serial.timeout")) {
+            configTimeout = Integer.parseInt(props.getProperty("serial.timeout"));
+        }
+    }
+
     public static void main(String args[]) {
-        //TODO: Use a argument parser here to make things simpler
-        if (args.length > 0) {
-            comPort = args[0];
-        } else {
-            comPort = "COM1";
+        loadConfiguration();
+        
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("--port") && i + 1 < args.length) {
+                configPort = args[++i];
+            } else if (args[i].equals("--baudrate") && i + 1 < args.length) {
+                configBaudRate = Integer.parseInt(args[++i]);
+            } else if (args[i].equals("--timeout") && i + 1 < args.length) {
+                configTimeout = Integer.parseInt(args[++i]);
+            } else if (!args[i].startsWith("-")) {
+                configPort = args[i];
+            }
         }
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             PowerDisplay pd = new PowerDisplay();
             pd.setVisible(true);

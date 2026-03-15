@@ -20,10 +20,10 @@
             "type": "shell",
             "command": "javac",
             "args": [
-                "-source", "1.8",
-                "-target", "1.8",
+                "-source", "21",
+                "-target", "21",
                 "-encoding", "UTF-8",
-                "-cp", "lib/sp-core.jar:lib/sp-tty.jar:lib/absolutelayout/AbsoluteLayout.jar",
+                "-cp", "lib/jSerialComm-2.11.0.jar:lib/absolutelayout/AbsoluteLayout.jar",
                 "-d", "build",
                 "-sourcepath", "src",
                 "src/com/wt2p/lp100a/*.java"
@@ -68,7 +68,7 @@
         {
             "label": "Full Build (manual)",
             "type": "shell",
-            "command": "mkdir -p build dist && javac -source 1.8 -target 1.8 -encoding UTF-8 -cp lib/sp-core.jar:lib/sp-tty.jar:lib/absolutelayout/AbsoluteLayout.jar -d build -sourcepath src src/com/wt2p/lp100a/*.java && jar cfme dist/WT2P_LP100A.jar com.wt2p.lp100a.PowerDisplay -C build .",
+            "command": "mkdir -p build dist && javac -source 21 -target 21 -encoding UTF-8 -cp lib/jSerialComm-2.11.0.jar:lib/absolutelayout/AbsoluteLayout.jar -d build -sourcepath src src/com/wt2p/lp100a/*.java && jar cfme dist/WT2P_LP100A.jar com.wt2p.lp100a.PowerDisplay -C build .",
             "options": {
                 "cwd": "${workspaceFolder}"
             },

@@ -11,7 +11,7 @@
     <property name="lib.dir" location="lib"/>
     <property name="main.class" value="com.wt2p.lp100a.PowerDisplay"/>
 
-    <property name="java.version" value="1.8"/>
+    <property name="java.version" value="21"/>
 
     <path id="classpath">
         <fileset dir="${lib.dir}">
@@ -57,8 +57,7 @@
         <java fork="true" classname="${main.class}">
             <classpath>
                 <pathelement location="${dist.dir}/WT2P_LP100A.jar"/>
-                <pathelement location="${dist.dir}/lib/sp-core.jar"/>
-                <pathelement location="${dist.dir}/lib/sp-tty.jar"/>
+                <pathelement location="${dist.dir}/lib/jSerialComm-2.11.0.jar"/>
                 <pathelement location="${dist.dir}/lib/absolutelayout/AbsoluteLayout.jar"/>
             </classpath>
             <arg value="${args}"/>
