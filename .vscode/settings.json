@@ -1,5 +1,5 @@
 {
-    "java.project.sourcePaths": ["src"],
+    "java.project.sourcePaths": ["src", "test"],
     "java.project.outputPath": "build",
     "java.configuration.runtimes": [
         {
@@ -14,6 +14,13 @@
             "classpaths": [
                 "lib/jSerialComm-2.11.0.jar",
                 "lib/absolutelayout/AbsoluteLayout.jar"
+            ]
+        },
+        {
+            "id": "junit",
+            "classpaths": [
+                "lib/junit-4.13.2.jar",
+                "lib/hamcrest-core-1.3.jar"
             ]
         }
     ],

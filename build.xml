@@ -12,7 +12,7 @@
     <property name="lib.dir" location="lib"/>
     <property name="main.class" value="com.wt2p.lp100a.PowerDisplay"/>
 
-    <property name="java.version" value="21"/>
+    <property name="java.release" value="21"/>
 
     <path id="classpath">
         <fileset dir="${lib.dir}">
@@ -27,7 +27,7 @@
     </target>
 
     <target name="compile" depends="init" description="Compile Java sources">
-        <javac srcdir="${src.dir}" destdir="${build.dir}" source="${java.version}" target="${java.version}" encoding="UTF-8" includeantruntime="false">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" source="${java.release}" target="${java.release}" encoding="UTF-8" includeantruntime="false">
             <classpath refid="classpath"/>
         </javac>
         <copy todir="${build.dir}">
@@ -55,7 +55,7 @@
     </target>
 
     <target name="compile-tests" depends="compile" description="Compile test sources">
-        <javac srcdir="${test.dir}" destdir="${build.dir}" source="${java.version}" target="${java.version}" encoding="UTF-8" includeantruntime="false">
+        <javac srcdir="${test.dir}" destdir="${build.dir}" source="${java.release}" target="${java.release}" encoding="UTF-8" includeantruntime="false">
             <classpath>
                 <path refid="classpath"/>
                 <pathelement location="${build.dir}"/>
