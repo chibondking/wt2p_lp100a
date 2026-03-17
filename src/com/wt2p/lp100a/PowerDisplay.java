@@ -77,6 +77,7 @@ public class PowerDisplay extends javax.swing.JFrame {
         
         while (true) {
             try {
+                /* This matches the total time of reading from the LP100A */
                 Thread.sleep(40);
                 
                 String dataStr = lp100Stub.getResponse().trim();
@@ -136,45 +137,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     }
 
     private static void updateForwardPowerBargraph(PowerDataDto dto) {
-        if (dto.getForwardPower() >= 0) {
-            jpPwrLow.setValue(dto.getForwardPower().intValue());
-        }
-
-        if (dto.getForwardPower() > 100) {
-            jpPwrLowMid.setValue(dto.getForwardPower().intValue());
-        }
-        if (dto.getForwardPower() < 100) {
-            jpPwrLowMid.setValue(0);
-        }
-
-        if (dto.getForwardPower() >= 500) {
-            jpPwrMid.setValue(dto.getForwardPower().intValue());
-        } else if (dto.getForwardPower() < 500) {
-            jpPwrMid.setValue(0);
-        }
-
-        if (dto.getForwardPower() > 1000 && dto.getForwardPower() <= 1500) {
-            jpPwrHigh.setValue(dto.getForwardPower().intValue());
-        } else if (dto.getForwardPower() < 1000) {
-            jpPwrHigh.setValue(0);
-        }
-
-        if (dto.getForwardPower() > 1500 && dto.getForwardPower() <= 2000) {
-            jpPwrHighHigh.setValue(dto.getForwardPower().intValue());
-            jpPwrHigh.setValue(dto.getForwardPower().intValue());
-            jlPowerText.setForeground(Color.RED);
-        } else if (dto.getForwardPower() <= 1500) {
-            jpPwrHighHigh.setValue(0);
-            jlPowerText.setForeground(Color.WHITE);
-        }
-
-        if (dto.getForwardPower() == 0) {
-            jpPwrLow.setValue(0);
-            jpPwrLowMid.setValue(0);
-            jpPwrMid.setValue(0);
-            jpPwrHigh.setValue(0);
-        }
-
+        powerBargraph.setPower(dto.getForwardPower());
     }
 
     private static void update_dBmBargraph(PowerDataDto dto) {
@@ -298,12 +261,8 @@ public class PowerDisplay extends javax.swing.JFrame {
         jl_Power = new javax.swing.JLabel();
         jlSWR = new javax.swing.JLabel();
         jpPwrBargraphPanel = new javax.swing.JPanel();
-        jpPwrLow = new javax.swing.JProgressBar();
+        powerBargraph = new PowerBargraph();
         jlPowerText = new javax.swing.JLabel();
-        jpPwrLowMid = new javax.swing.JProgressBar();
-        jpPwrHigh = new javax.swing.JProgressBar();
-        jpPwrMid = new javax.swing.JProgressBar();
-        jpPwrHighHigh = new javax.swing.JProgressBar();
         jpSWRPanel = new javax.swing.JPanel();
         jl_SWR = new javax.swing.JLabel();
         jpSWRLow = new javax.swing.JProgressBar();
@@ -382,55 +341,14 @@ public class PowerDisplay extends javax.swing.JFrame {
         jpPwrBargraphPanel.setBackground(new java.awt.Color(0, 0, 0));
         jpPwrBargraphPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jpPwrLow.setBackground(new java.awt.Color(0, 47, 63));
-        jpPwrLow.setForeground(new java.awt.Color(21, 166, 215));
-        jpPwrLow.setBorder(null);
-        jpPwrLow.setBorderPainted(false);
-        jpPwrLow.setString("0");
-        jpPwrBargraphPanel.add(jpPwrLow, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 0, 115, 30));
-
         jlPowerText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jlPowerText.setForeground(new java.awt.Color(255, 255, 255));
         jlPowerText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jpPwrBargraphPanel.add(jlPowerText, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 30));
 
-        jpPwrLowMid.setBackground(new java.awt.Color(0, 47, 63));
-        jpPwrLowMid.setForeground(new java.awt.Color(21, 166, 215));
-        jpPwrLowMid.setMaximum(500);
-        jpPwrLowMid.setMinimum(100);
-        jpPwrLowMid.setValue(0);
-        jpPwrLowMid.setBorder(null);
-        jpPwrLowMid.setBorderPainted(false);
-        jpPwrBargraphPanel.add(jpPwrLowMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 90, 30));
+        jpPwrBargraphPanel.add(powerBargraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 0, 390, 30));
 
-        jpPwrHigh.setBackground(new java.awt.Color(42, 17, 0));
-        jpPwrHigh.setForeground(new java.awt.Color(249, 136, 60));
-        jpPwrHigh.setMaximum(1500);
-        jpPwrHigh.setMinimum(1000);
-        jpPwrHigh.setValue(0);
-        jpPwrHigh.setBorder(null);
-        jpPwrHigh.setBorderPainted(false);
-        jpPwrBargraphPanel.add(jpPwrHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 30, 30));
-
-        jpPwrMid.setBackground(new java.awt.Color(42, 17, 0));
-        jpPwrMid.setForeground(new java.awt.Color(249, 136, 60));
-        jpPwrMid.setMaximum(1000);
-        jpPwrMid.setMinimum(500);
-        jpPwrMid.setValue(0);
-        jpPwrMid.setBorder(null);
-        jpPwrMid.setBorderPainted(false);
-        jpPwrBargraphPanel.add(jpPwrMid, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 40, 30));
-
-        jpPwrHighHigh.setBackground(new java.awt.Color(49, 0, 0));
-        jpPwrHighHigh.setForeground(new java.awt.Color(255, 0, 0));
-        jpPwrHighHigh.setMaximum(2000);
-        jpPwrHighHigh.setMinimum(1500);
-        jpPwrHighHigh.setValue(0);
-        jpPwrHighHigh.setBorder(null);
-        jpPwrHighHigh.setBorderPainted(false);
-        jpPwrBargraphPanel.add(jpPwrHighHigh, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 30, 30));
-
-        mainPanel.add(jpPwrBargraphPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 11, 390, 30));
+        mainPanel.add(jpPwrBargraphPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 11, 480, 30));
 
         jpSWRPanel.setBackground(new java.awt.Color(0, 0, 0));
         jpSWRPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -869,11 +787,7 @@ public class PowerDisplay extends javax.swing.JFrame {
     private javax.swing.JLabel jl_dBm_Scale_500;
     public static javax.swing.JLabel jl_dBm_Text;
     private javax.swing.JPanel jpPwrBargraphPanel;
-    private static javax.swing.JProgressBar jpPwrHigh;
-    private static javax.swing.JProgressBar jpPwrHighHigh;
-    private static javax.swing.JProgressBar jpPwrLow;
-    private static javax.swing.JProgressBar jpPwrLowMid;
-    private static javax.swing.JProgressBar jpPwrMid;
+    private static PowerBargraph powerBargraph;
     private static javax.swing.JProgressBar jpSWRHigh;
     private static javax.swing.JProgressBar jpSWRLow;
     private static javax.swing.JProgressBar jpSWRMedium;

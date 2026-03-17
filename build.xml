@@ -35,7 +35,7 @@
         </copy>
     </target>
 
-    <target name="dist" depends="compile" description="Create JAR file">
+    <target name="dist" depends="compile" description="Create JAR file with dependencies">
         <jar destfile="${dist.dir}/WT2P_LP100A.jar" basedir="${build.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
@@ -43,10 +43,11 @@
                 <attribute name="Implementation-Title" value="WT2P LP-100A Utility"/>
                 <attribute name="Implementation-Version" value="1.0"/>
             </manifest>
+            <zipfileset src="${lib.dir}/jSerialComm-2.11.0.jar"/>
+            <zipfileset src="${lib.dir}/absolutelayout/AbsoluteLayout.jar"/>
+            <zipfileset src="${lib.dir}/sp-tty.jar"/>
         </jar>
-        <copy todir="${dist.dir}/lib">
-            <fileset dir="${lib.dir}"/>
-        </copy>
+        <copy file="lp100a.properties" todir="${dist.dir}"/>
     </target>
 
     <target name="clean" description="Clean build artifacts">
@@ -82,8 +83,6 @@
         <java fork="true" classname="${main.class}">
             <classpath>
                 <pathelement location="${dist.dir}/WT2P_LP100A.jar"/>
-                <pathelement location="${dist.dir}/lib/jSerialComm-2.11.0.jar"/>
-                <pathelement location="${dist.dir}/lib/absolutelayout/AbsoluteLayout.jar"/>
             </classpath>
             <arg value="${args}"/>
         </java>

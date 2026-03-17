@@ -33,8 +33,8 @@ public class LP100Stub {
     public String getResponse() {
         tickCount++;
         
-        double powerVariation = (random.nextDouble() - 0.5) * 20;
-        double power = basePower + powerVariation;
+        double power = random.nextDouble() * 700;
+        double peakHold = Math.min(700, power + (random.nextDouble() * 10));
         
         double swrVariation = (random.nextDouble() - 0.5) * 0.1;
         double swr = baseSWR + swrVariation;
@@ -45,10 +45,7 @@ public class LP100Stub {
         double zVariation = (random.nextDouble() - 0.5) * 2;
         double z = baseZ + zVariation;
         
-        double peakHold = power + (random.nextDouble() * 5);
-        
         if (tickCount % 60 == 0) {
-            basePower = 50 + random.nextDouble() * 150;
             baseSWR = 1.0 + random.nextDouble() * 0.5;
         }
         
