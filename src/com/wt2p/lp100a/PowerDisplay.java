@@ -23,6 +23,8 @@ public class PowerDisplay extends javax.swing.JFrame {
     private static String configPort = "COM1";
     private static int configBaudRate = 115200;
     private static int configTimeout = 100;
+    private static String configMode = "production";
+    private static LP100Stub lp100Stub;
 
     /**
      * Creates new form PowerDisplay
@@ -65,6 +67,23 @@ public class PowerDisplay extends javax.swing.JFrame {
                     parseStringFromLP100A(dataStr);
                 }
             } catch (IOException e) {
+                break;
+            }
+        }
+    }
+    
+    private static void startReadingFromStub() throws InterruptedException {
+        lp100Stub = new LP100Stub();
+        
+        while (true) {
+            try {
+                Thread.sleep(40);
+                
+                String dataStr = lp100Stub.getResponse().trim();
+                if (!dataStr.isEmpty()) {
+                    parseStringFromLP100A(dataStr);
+                }
+            } catch (Exception e) {
                 break;
             }
         }
@@ -770,6 +789,9 @@ public class PowerDisplay extends javax.swing.JFrame {
             System.err.println("Warning: Could not load config file: " + e.getMessage());
         }
         
+        if (props.containsKey("mode")) {
+            configMode = props.getProperty("mode").toLowerCase().trim();
+        }
         if (props.containsKey("serial.port")) {
             configPort = props.getProperty("serial.port");
         }
@@ -783,18 +805,6 @@ public class PowerDisplay extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         loadConfiguration();
-        
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("--port") && i + 1 < args.length) {
-                configPort = args[++i];
-            } else if (args[i].equals("--baudrate") && i + 1 < args.length) {
-                configBaudRate = Integer.parseInt(args[++i]);
-            } else if (args[i].equals("--timeout") && i + 1 < args.length) {
-                configTimeout = Integer.parseInt(args[++i]);
-            } else if (!args[i].startsWith("-")) {
-                configPort = args[i];
-            }
-        }
 
         java.awt.EventQueue.invokeLater(() -> {
             PowerDisplay pd = new PowerDisplay();
@@ -802,13 +812,16 @@ public class PowerDisplay extends javax.swing.JFrame {
         });
 
         try {
-            // Hackish way to prevent NPE's when you cannot connect to te LP-100A
-            // We sleep for 300ms to allow for all of the UI elements to be
-            // initialized before attempting to connect to the LP-100.
             Thread.sleep(400);
-            connectToComPort();
-            startReadingFromComPort();
-            updateStatusField("Connected", false);           
+            
+            if ("test".equals(configMode)) {
+                updateStatusField("TEST MODE - Simulated Device", false);
+                startReadingFromStub();
+            } else {
+                connectToComPort();
+                startReadingFromComPort();
+                updateStatusField("Connected", false);           
+            }
         } catch (IOException | InterruptedException ex) {
             updateStatusField("Connection error to LP-100A! Restart.", true);
             jl_ConnectedIcon.setVisible(false);
